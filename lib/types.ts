@@ -24,6 +24,8 @@ export interface Testimonial {
   author_title: string | null;
   content: string;
   rating: number;
-  status: "pending" | "approved" | "rejected";
+  status: "unverified" | "pending" | "approved" | "rejected";
+  email_verified: boolean;
+  verification_token: string | null;
   created_at: string;
 }

@@ -29,8 +29,11 @@ create table public.testimonials (
   author_title text,
   content text not null,
   rating integer default 5 check (rating >= 1 and rating <= 5),
-  status text default 'pending' check (status in ('pending', 'approved', 'rejected')),
-  created_at timestamptz default now()
+  status text default 'unverified' check (status in ('unverified', 'pending', 'approved', 'rejected')),
+  email_verified boolean default false,
+  verification_token uuid,
+  created_at timestamptz default now(),
+  constraint unique_email_per_space unique (space_id, author_email)
 );
 
 -- Create profile automatically on signup

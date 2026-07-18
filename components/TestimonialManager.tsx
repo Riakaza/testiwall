@@ -15,7 +15,8 @@ export function TestimonialManager({
   const [filter, setFilter] = useState<"all" | "pending" | "approved" | "rejected">("all");
   const router = useRouter();
 
-  const filtered = testimonials.filter(
+  const verified = testimonials.filter((t) => t.status !== "unverified");
+  const filtered = verified.filter(
     (t) => filter === "all" || t.status === filter
   );
 
@@ -32,10 +33,10 @@ export function TestimonialManager({
   }
 
   const counts = {
-    all: testimonials.length,
-    pending: testimonials.filter((t) => t.status === "pending").length,
-    approved: testimonials.filter((t) => t.status === "approved").length,
-    rejected: testimonials.filter((t) => t.status === "rejected").length,
+    all: verified.length,
+    pending: verified.filter((t) => t.status === "pending").length,
+    approved: verified.filter((t) => t.status === "approved").length,
+    rejected: verified.filter((t) => t.status === "rejected").length,
   };
 
   const filterLabels = {
@@ -98,7 +99,15 @@ export function TestimonialManager({
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-900">{t.author_name}</p>
+                      <p className="text-sm font-medium text-gray-900 flex items-center gap-1.5">
+                        {t.author_name}
+                        {t.email_verified && (
+                          <span className="inline-flex items-center gap-0.5 text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded-full border border-blue-200 font-medium">
+                            <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.403 12.652a3 3 0 010-5.304 3 3 0 00-1.065-1.065 3 3 0 01-5.304 0 3 3 0 00-1.065 1.065 3 3 0 010 5.304 3 3 0 001.065 1.065 3 3 0 015.304 0 3 3 0 001.065-1.065zM12.44 10.56a.75.75 0 00-1.06-1.06l-2.25 2.25a.75.75 0 000 1.06l1.125 1.125a.75.75 0 001.06 0l3.375-3.375a.75.75 0 00-1.06-1.06l-2.845 2.845-.595-.595 2.25-2.19z" clipRule="evenodd" /></svg>
+                            vérifié
+                          </span>
+                        )}
+                      </p>
                       {t.author_title && (
                         <p className="text-xs text-gray-500">{t.author_title}</p>
                       )}
