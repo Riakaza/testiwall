@@ -61,6 +61,9 @@ export function CollectForm({
           Un email de confirmation a été envoyé à <strong>{email}</strong>.<br />
           Clique sur le lien pour valider ton témoignage.
         </p>
+        <p className="text-xs text-gray-400 mt-3">
+          Tu ne le vois pas ? Vérifie ton dossier spam ou indésirables.
+        </p>
       </div>
     );
   }
