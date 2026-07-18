@@ -69,6 +69,11 @@ Next.js App Router — pas de `src/` directory, tout à la racine.
 2. Unicité email — index unique `(space_id, author_email) WHERE status != 'unverified'`
 3. Vérification email — soumission → status `unverified` → email Resend avec token → clic → status `pending`
 
+**Resend (emails) :**
+- Plan gratuit : envoi uniquement à l'email du compte Resend tant qu'aucun domaine n'est vérifié
+- Expéditeur actuel : `onboarding@resend.dev` (domaine partagé → emails arrivent en spam)
+- Pour la prod : ajouter un domaine vérifié sur Resend (DNS) → emails depuis `noreply@tondomaine.fr` en boîte principale
+
 **Database (Supabase Postgres):**
 - 3 tables : `profiles`, `spaces`, `testimonials`
 - `testimonials` a les colonnes `email_verified`, `verification_token`, status check inclut `unverified`
