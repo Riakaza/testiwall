@@ -34,7 +34,14 @@ export default async function CollectPage({
         </div>
 
         <p className="mt-6 text-center text-xs text-gray-400">
-          Powered by <span className="font-medium">TestiWall</span>
+          <a
+            href="https://testiwall-kappa.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-accent transition-colors"
+          >
+            Powered by <span className="font-semibold text-accent">TestiWall</span>
+          </a>
         </p>
       </div>
     </div>

@@ -100,6 +100,33 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Dogfooding Widget Section */}
+        <div className="w-full max-w-4xl mx-auto mb-20 text-center animate-fade-in">
+          <h3 className="text-2xl font-bold mb-2">
+            Ce que nos utilisateurs en pensent
+          </h3>
+          <p className="text-gray-500 text-sm mb-8">
+            Propulsé par TestiWall — on mange notre propre cuisine.
+          </p>
+
+          <div className="w-full rounded-2xl overflow-hidden shadow-sm border border-gray-100 bg-white">
+            <iframe
+              src="/embed/testiwall"
+              className="w-full h-[400px] border-none"
+              title="TestiWall Widget"
+            />
+          </div>
+
+          <div className="mt-8">
+            <Link
+              href="/signup"
+              className="inline-flex items-center gap-2 text-accent font-semibold hover:text-accent-dark transition-colors group"
+            >
+              Crée ton mur de témoignages <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
+          </div>
+        </div>
       </main>
 
       <footer className="border-t border-gray-200 px-6 py-6 text-center text-sm text-gray-400">

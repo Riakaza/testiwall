@@ -4,10 +4,14 @@ import type { Testimonial } from "@/lib/types";
 
 export default async function EmbedPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const { slug } = await params;
+  const resolvedSearchParams = await searchParams;
+
   const supabase = await createClient();
 
   const { data: space } = await supabase
@@ -26,8 +30,29 @@ export default async function EmbedPage({
     .order("created_at", { ascending: false })
     .limit(20);
 
+  const rawAccent = typeof resolvedSearchParams.accent === "string" ? resolvedSearchParams.accent : "";
+  const accentColor = /^[0-9a-fA-F]{6}$/.test(rawAccent) ? rawAccent : "6366f1";
+
+  const themeParam = typeof resolvedSearchParams.theme === "string" ? resolvedSearchParams.theme : "light";
+  const isDark = themeParam === "dark";
+
+  const theme = {
+    bodyBg: isDark ? "#1f2937" : "transparent",
+    cardBg: isDark ? "#374151" : "#ffffff",
+    cardBorder: isDark ? "1px solid #4b5563" : "1px solid #e5e7eb",
+    textPrimary: isDark ? "#f9fafb" : "#1f2937",
+    textSecondary: isDark ? "#d1d5db" : "#6b7280",
+    textMuted: isDark ? "#9ca3af" : "#9ca3af",
+    authorName: isDark ? "#ffffff" : "#111827",
+    badgeBg: isDark ? "#064e3b" : "#ecfdf5",
+    badgeText: isDark ? "#34d399" : "#059669",
+    boxShadow: isDark
+      ? "0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1)"
+      : "0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02)",
+  };
+
   return (
-    <html>
+    <html style={{ background: theme.bodyBg }}>
       <body style={{ margin: 0, fontFamily: "'Inter', system-ui, -apple-system, sans-serif", background: "transparent" }}>
         <div
           style={{
@@ -42,11 +67,11 @@ export default async function EmbedPage({
               <div
                 key={t.id}
                 style={{
-                  border: "1px solid #e5e7eb",
+                  border: theme.cardBorder,
                   borderRadius: "16px",
                   padding: "24px",
-                  background: "#ffffff",
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02)",
+                  background: theme.cardBg,
+                  boxShadow: theme.boxShadow,
                   transition: "box-shadow 0.2s, transform 0.2s",
                 }}
               >
@@ -55,7 +80,7 @@ export default async function EmbedPage({
                     <span
                       key={i}
                       style={{
-                        color: i < t.rating ? "#f59e0b" : "#e5e7eb",
+                        color: i < t.rating ? "#f59e0b" : (isDark ? "#4b5563" : "#e5e7eb"),
                         fontSize: "18px",
                       }}
                     >
@@ -67,7 +92,7 @@ export default async function EmbedPage({
                   style={{
                     margin: "0 0 16px",
                     lineHeight: 1.6,
-                    color: "#1f2937",
+                    color: theme.textPrimary,
                     fontSize: "15px",
                   }}
                 >
@@ -79,7 +104,7 @@ export default async function EmbedPage({
                       width: "32px",
                       height: "32px",
                       borderRadius: "50%",
-                      background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+                      background: `linear-gradient(135deg, #${accentColor}, #${accentColor}dd)`,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -91,7 +116,7 @@ export default async function EmbedPage({
                     {t.author_name.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "14px", fontWeight: 600, color: "#111827" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "14px", fontWeight: 600, color: theme.authorName }}>
                       {t.author_name}
                       {t.email_verified && (
                         <span style={{
@@ -100,8 +125,8 @@ export default async function EmbedPage({
                           gap: "3px",
                           fontSize: "10px",
                           fontWeight: 500,
-                          color: "#059669",
-                          background: "#ecfdf5",
+                          color: theme.badgeText,
+                          background: theme.badgeBg,
                           padding: "2px 6px",
                           borderRadius: "99px",
                         }}>
@@ -113,7 +138,7 @@ export default async function EmbedPage({
                       )}
                     </div>
                     {t.author_title && (
-                      <div style={{ fontSize: "12px", color: "#6b7280" }}>
+                      <div style={{ fontSize: "12px", color: theme.textSecondary }}>
                         {t.author_title}
                       </div>
                     )}
@@ -122,7 +147,7 @@ export default async function EmbedPage({
               </div>
             ))
           ) : (
-            <p style={{ color: "#9ca3af", textAlign: "center", padding: "40px 0" }}>
+            <p style={{ color: theme.textMuted, textAlign: "center", padding: "40px 0" }}>
               Aucun témoignage pour le moment.
             </p>
           )}
@@ -132,10 +157,22 @@ export default async function EmbedPage({
             textAlign: "center",
             padding: "12px",
             fontSize: "11px",
-            color: "#9ca3af",
+            color: theme.textMuted,
           }}
         >
-          Powered by <span style={{ fontWeight: 600 }}>TestiWall</span>
+          Powered by{" "}
+          <a
+            href="https://testiwall-kappa.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              fontWeight: 600,
+              color: `#${accentColor}`,
+              textDecoration: "none"
+            }}
+          >
+            TestiWall
+          </a>
         </div>
       </body>
     </html>

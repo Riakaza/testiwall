@@ -155,6 +155,7 @@ export default async function SpaceDetailPage({
             <TestimonialManager
               testimonials={(testimonials as Testimonial[]) || []}
               spaceId={space.id}
+              spaceSlug={space.slug}
             />
           </div>
         ) : (
@@ -192,6 +193,7 @@ export default async function SpaceDetailPage({
             <TestimonialManager
               testimonials={(testimonials as Testimonial[]) || []}
               spaceId={space.id}
+              spaceSlug={space.slug}
             />
           </>
         )}

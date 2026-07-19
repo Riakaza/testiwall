@@ -8,12 +8,15 @@ import type { Testimonial } from "@/lib/types";
 export function TestimonialManager({
   testimonials,
   spaceId,
+  spaceSlug,
 }: {
   testimonials: Testimonial[];
   spaceId: string;
+  spaceSlug: string;
 }) {
   const [filter, setFilter] = useState<"all" | "pending" | "approved" | "rejected">("all");
   const [showAddModal, setShowAddModal] = useState(false);
+  const [shareOpenId, setShareOpenId] = useState<string | null>(null);
   const [addForm, setAddForm] = useState({
     author_name: "",
     author_email: "",
@@ -102,7 +105,6 @@ export function TestimonialManager({
         </button>
       </div>
 
-      {/* Modal ajout témoignage */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
@@ -316,6 +318,56 @@ export function TestimonialManager({
                   >
                     Rejeter
                   </button>
+                )}
+                {t.status === "approved" && (
+                  <div className="relative">
+                    <button
+                      onClick={() => setShareOpenId(shareOpenId === t.id ? null : t.id)}
+                      className="text-xs px-4 py-2 bg-gray-50 text-gray-600 rounded-lg font-medium hover:bg-gray-100 transition-colors border border-gray-200 inline-flex items-center gap-1.5"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186l5.566-3.18a2.25 2.25 0 11.233 1.977l-5.566 3.181m0 0l5.566 3.18a2.25 2.25 0 10.233 1.977l-5.566-3.18" />
+                      </svg>
+                      Partager
+                    </button>
+                    {shareOpenId === t.id && (
+                      <>
+                        <div className="fixed inset-0 z-10" onClick={() => setShareOpenId(null)} />
+                        <div className="absolute left-0 bottom-full mb-1 w-44 bg-white rounded-xl shadow-lg border border-gray-100 p-2 z-20">
+                          <a
+                            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                              `"${t.content}" — ${t.author_name} ⭐\n\nCollecte tes témoignages gratuitement sur TestiWall`
+                            )}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => setShareOpenId(null)}
+                            className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                          >
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                            Twitter
+                          </a>
+                          <a
+                            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+                              typeof window !== "undefined"
+                                ? `${window.location.origin}/p/${spaceSlug}`
+                                : ""
+                            )}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => setShareOpenId(null)}
+                            className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                          >
+                            <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                            </svg>
+                            LinkedIn
+                          </a>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 )}
                 <button
                   onClick={() => deleteTestimonial(t.id)}
