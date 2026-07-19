@@ -213,7 +213,8 @@ export default async function SpaceDetailPage({
             {/* Import / Export */}
             <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-8 shadow-sm">
               <h3 className="font-semibold text-gray-900 mb-1">Importer / Exporter</h3>
-              <p className="text-sm text-gray-500 mb-4">Importe tes témoignages existants ou exporte tes données.</p>
+              <p className="text-sm text-gray-500 mb-3">Importe tes avis depuis Google, TripAdvisor ou tout autre fichier CSV. Exporte tes données à tout moment.</p>
+              <p className="text-xs text-gray-400 mb-4">Format CSV attendu : colonnes nom, email, contenu, note (1-5). Copie tes avis Google/TripAdvisor dans un tableur → Enregistre en CSV → Importe ici.</p>
               <div className="flex flex-wrap gap-3">
                 <ImportCSV spaceId={space.id} />
                 <ExportCSV testimonials={(testimonials as Testimonial[]) || []} spaceName={space.slug} />

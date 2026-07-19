@@ -54,7 +54,7 @@ export default function Home() {
             Tes clients laissent un avis via un lien. Tu l&apos;affiches sur ton
             site en un copier-coller. Gratuit, sans coder.
           </p>
-          <p className="text-xs text-gray-400 mt-2">Gratuit pour toujours. Un plan Pro arrivera pour les features avancées.</p>
+          <p className="text-xs text-gray-400 mt-2">Gratuit aujourd&apos;hui. Un plan Pro arrivera pour les features avancées.</p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
