@@ -5,16 +5,16 @@ import { Spotlight } from "@/components/ui/spotlight";
 
 export function SplineSceneBasic() {
   return (
-    <Card className="w-full h-[300px] sm:h-[400px] md:h-[500px] bg-black/[0.96] relative overflow-hidden rounded-2xl border-0">
+    <Card className="w-full h-[300px] sm:h-[400px] md:h-[500px] bg-black/[0.96] relative overflow-hidden rounded-2xl border border-gray-700/50 shadow-lg shadow-accent/5">
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" />
       <div className="flex h-full">
         <div className="flex-1 p-6 sm:p-8 md:p-12 relative z-10 flex flex-col justify-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-300">
             Preuve sociale.
             <br />
             <span className="text-2xl sm:text-3xl md:text-4xl">Sans effort.</span>
           </h1>
-          <p className="mt-3 sm:mt-4 text-sm sm:text-base text-neutral-300 max-w-lg leading-relaxed">
+          <p className="mt-3 sm:mt-4 text-sm sm:text-base text-neutral-200 max-w-lg leading-relaxed">
             Collecte les témoignages de tes clients et affiche-les sur ton site en quelques clics. Gratuit, rapide, sans code.
           </p>
         </div>
