@@ -235,8 +235,13 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="border-t border-gray-200 px-6 py-6 text-center text-sm text-gray-400">
-        TestiWall &mdash; Collecte et affiche tes avis clients. Gratuitement.
+      <footer className="border-t border-gray-200 px-6 py-8 text-center text-sm text-gray-400">
+        <p className="mb-3">TestiWall &mdash; Collecte et affiche tes avis clients. Gratuitement.</p>
+        <div className="flex justify-center gap-4">
+          <Link href="/mentions-legales" className="hover:text-accent transition-colors">Mentions légales</Link>
+          <Link href="/cgu" className="hover:text-accent transition-colors">CGU</Link>
+          <Link href="/confidentialite" className="hover:text-accent transition-colors">Confidentialité</Link>
+        </div>
       </footer>
     </div>
   );

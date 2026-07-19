@@ -4,6 +4,7 @@ import Link from "next/link";
 import { SpaceCard } from "@/components/SpaceCard";
 import { CreateSpaceForm } from "@/components/CreateSpaceForm";
 import { LogoutButton } from "@/components/LogoutButton";
+import { DeleteAccountButton } from "@/components/DeleteAccountButton";
 import type { Space } from "@/lib/types";
 
 export default async function DashboardPage() {
@@ -51,6 +52,11 @@ export default async function DashboardPage() {
             </p>
           </div>
         )}
+        {/* Zone danger */}
+        <div className="mt-16 pt-8 border-t border-gray-200">
+          <h3 className="text-sm font-medium text-gray-500 mb-3">Zone danger</h3>
+          <DeleteAccountButton />
+        </div>
       </main>
     </div>
   );

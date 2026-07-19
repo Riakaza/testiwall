@@ -9,6 +9,10 @@ function getSupabase() {
   );
 }
 
+function stripHtml(str: string): string {
+  return str.replace(/<[^>]*>/g, "");
+}
+
 function getTransporter() {
   return nodemailer.createTransport({
     service: "gmail",
@@ -76,10 +80,10 @@ export async function POST(request: NextRequest) {
   // Insert testimonial as unverified
   const { error: insertError } = await supabase.from("testimonials").insert({
     space_id,
-    author_name: author_name.trim(),
+    author_name: stripHtml(author_name).trim(),
     author_email: author_email.trim().toLowerCase(),
-    author_title: author_title?.trim() || null,
-    content: content.trim(),
+    author_title: author_title ? stripHtml(author_title).trim() : null,
+    content: stripHtml(content).trim(),
     rating: rating || 5,
     status: "unverified",
     email_verified: false,

@@ -147,9 +147,34 @@ export default async function EmbedPage({
               </div>
             ))
           ) : (
-            <p style={{ color: theme.textMuted, textAlign: "center", padding: "40px 0" }}>
-              Aucun témoignage pour le moment.
-            </p>
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "40px 20px",
+              textAlign: "center",
+            }}>
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={`#${accentColor}`}
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ marginBottom: "16px" }}
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <h3 style={{ margin: "0 0 8px 0", fontSize: "18px", fontWeight: 600, color: theme.textPrimary }}>
+                Aucun témoignage pour le moment
+              </h3>
+              <p style={{ margin: 0, fontSize: "14px", color: theme.textMuted }}>
+                Sois le premier à partager ton expérience !
+              </p>
+            </div>
           )}
         </div>
         <div
