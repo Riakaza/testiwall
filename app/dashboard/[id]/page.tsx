@@ -4,6 +4,7 @@ import Link from "next/link";
 import { TestimonialManager } from "@/components/TestimonialManager";
 import { LogoutButton } from "@/components/LogoutButton";
 import { CopyButton } from "@/components/CopyButton";
+import { InviteCopyButton } from "@/components/InviteCopyButton";
 import { EmbedInstructions } from "@/components/EmbedInstructions";
 import type { Testimonial } from "@/lib/types";
 import { headers } from "next/headers";
@@ -102,13 +103,16 @@ export default async function SpaceDetailPage({
                       </code>
                       <CopyButton text={collectUrl} />
                     </div>
-                    <a
-                      href={`/collect/${space.slug}`}
-                      target="_blank"
-                      className="inline-flex items-center gap-1 mt-3 text-sm text-accent font-medium hover:underline"
-                    >
-                      Voir le formulaire →
-                    </a>
+                    <div className="flex items-center gap-3 mt-3">
+                      <a
+                        href={`/collect/${space.slug}`}
+                        target="_blank"
+                        className="inline-flex items-center gap-1 text-sm text-accent font-medium hover:underline"
+                      >
+                        Voir le formulaire →
+                      </a>
+                      <InviteCopyButton collectUrl={collectUrl} spaceName={space.name} />
+                    </div>
                   </div>
                 </div>
 
@@ -164,6 +168,9 @@ export default async function SpaceDetailPage({
                     {collectUrl}
                   </code>
                   <CopyButton text={collectUrl} />
+                </div>
+                <div className="mt-3">
+                  <InviteCopyButton collectUrl={collectUrl} spaceName={space.name} />
                 </div>
               </div>
 
