@@ -2,6 +2,18 @@ import { createClient } from "@/lib/supabase-server";
 import { notFound } from "next/navigation";
 import type { Testimonial } from "@/lib/types";
 
+function timeAgo(dateStr: string): string {
+  const now = new Date();
+  const date = new Date(dateStr);
+  const diffMs = now.getTime() - date.getTime();
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  if (diffDays === 0) return "Aujourd'hui";
+  if (diffDays === 1) return "Hier";
+  if (diffDays < 30) return `Il y a ${diffDays} jours`;
+  if (diffDays < 365) return `Il y a ${Math.floor(diffDays / 30)} mois`;
+  return new Date(dateStr).toLocaleDateString("fr-FR");
+}
+
 export default async function EmbedPage({
   params,
   searchParams,
@@ -36,6 +48,11 @@ export default async function EmbedPage({
   const themeParam = typeof resolvedSearchParams.theme === "string" ? resolvedSearchParams.theme : "light";
   const isDark = themeParam === "dark";
 
+  const sortParam = typeof resolvedSearchParams.sort === "string" ? resolvedSearchParams.sort : "recent";
+  const sorted = [...(testimonials || [])];
+  if (sortParam === "rating") sorted.sort((a: Testimonial, b: Testimonial) => b.rating - a.rating);
+  else if (sortParam === "oldest") sorted.sort((a: Testimonial, b: Testimonial) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+
   const theme = {
     bodyBg: isDark ? "#1f2937" : "transparent",
     cardBg: isDark ? "#374151" : "#ffffff",
@@ -62,8 +79,8 @@ export default async function EmbedPage({
             padding: "16px",
           }}
         >
-          {testimonials && testimonials.length > 0 ? (
-            testimonials.map((t: Testimonial) => (
+          {sorted.length > 0 ? (
+            sorted.map((t: Testimonial) => (
               <div
                 key={t.id}
                 style={{
@@ -142,6 +159,9 @@ export default async function EmbedPage({
                         {t.author_title}
                       </div>
                     )}
+                    <div style={{ fontSize: "11px", color: theme.textMuted, marginTop: "2px" }}>
+                      {timeAgo(t.created_at)}
+                    </div>
                   </div>
                 </div>
               </div>

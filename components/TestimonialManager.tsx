@@ -15,6 +15,7 @@ export function TestimonialManager({
   spaceSlug: string;
 }) {
   const [filter, setFilter] = useState<"all" | "pending" | "approved" | "rejected">("all");
+  const [sort, setSort] = useState<"recent" | "oldest" | "rating">("recent");
   const [showAddModal, setShowAddModal] = useState(false);
   const [shareOpenId, setShareOpenId] = useState<string | null>(null);
   const [addForm, setAddForm] = useState({
@@ -32,6 +33,11 @@ export function TestimonialManager({
   const filtered = verified.filter(
     (t) => filter === "all" || t.status === filter
   );
+  const sorted = [...filtered].sort((a, b) => {
+    if (sort === "rating") return b.rating - a.rating;
+    if (sort === "oldest") return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+  });
 
   async function updateStatus(id: string, status: string) {
     const supabase = createClient();
@@ -224,7 +230,7 @@ export function TestimonialManager({
         </div>
       )}
 
-      <div className="flex gap-2 mb-6 flex-wrap">
+      <div className="flex flex-wrap items-center gap-2 mb-6">
         {(["all", "pending", "approved", "rejected"] as const).map((f) => (
           <button
             key={f}
@@ -238,15 +244,24 @@ export function TestimonialManager({
             {filterLabels[f]} ({counts[f]})
           </button>
         ))}
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value as "recent" | "oldest" | "rating")}
+          className="ml-auto px-3 py-2 rounded-lg text-sm border border-gray-200 text-gray-600 bg-white"
+        >
+          <option value="recent">Plus récents</option>
+          <option value="oldest">Plus anciens</option>
+          <option value="rating">Meilleure note</option>
+        </select>
       </div>
 
-      {filtered.length === 0 ? (
+      {sorted.length === 0 ? (
         <div className="text-center py-12 bg-white rounded-2xl border border-gray-200">
           <p className="text-gray-400">Aucun témoignage dans cette catégorie.</p>
         </div>
       ) : (
         <div className="space-y-4">
-          {filtered.map((t) => (
+          {sorted.map((t) => (
             <div
               key={t.id}
               className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow"
@@ -289,17 +304,22 @@ export function TestimonialManager({
                   </div>
                 </div>
 
-                <span
-                  className={`flex-shrink-0 text-xs px-2.5 py-1 rounded-full font-medium ${
-                    t.status === "approved"
-                      ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                      : t.status === "rejected"
-                      ? "bg-red-50 text-red-700 border border-red-200"
-                      : "bg-amber-50 text-amber-700 border border-amber-200"
-                  }`}
-                >
-                  {t.status === "approved" ? "Approuvé" : t.status === "rejected" ? "Rejeté" : "En attente"}
-                </span>
+                <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                  <span
+                    className={`text-xs px-2.5 py-1 rounded-full font-medium ${
+                      t.status === "approved"
+                        ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                        : t.status === "rejected"
+                        ? "bg-red-50 text-red-700 border border-red-200"
+                        : "bg-amber-50 text-amber-700 border border-amber-200"
+                    }`}
+                  >
+                    {t.status === "approved" ? "Approuvé" : t.status === "rejected" ? "Rejeté" : "En attente"}
+                  </span>
+                  <span className="text-[11px] text-gray-400">
+                    {new Date(t.created_at).toLocaleDateString("fr-FR")}
+                  </span>
+                </div>
               </div>
 
               <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-gray-100">
