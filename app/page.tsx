@@ -32,12 +32,12 @@ export default function Home() {
 
       <main className="flex-1 flex flex-col items-center px-6">
         {/* Hero */}
-        <div className="w-full max-w-6xl mt-12 animate-fade-in">
+        <div className="w-full max-w-6xl mt-6 sm:mt-12 animate-fade-in">
           <LazySplineHero />
         </div>
 
         {/* CTA sous le hero */}
-        <div className="text-center mt-8 sm:mt-12 animate-fade-in px-2">
+        <div className="text-center mt-4 sm:mt-10 animate-fade-in px-2">
           <div className="inline-block px-4 py-1.5 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4 sm:mb-6">
             100% gratuit — aucune carte bancaire
           </div>
