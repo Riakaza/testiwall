@@ -37,16 +37,16 @@ export default function Home() {
           </div>
 
           <h2 className="text-4xl sm:text-5xl font-bold max-w-3xl leading-[1.1] tracking-tight mx-auto">
-            Collecte tes{" "}
+            Un mur d&apos;{" "}
             <span className="bg-gradient-to-r from-accent to-purple-500 bg-clip-text text-transparent">
-              témoignages clients
+              avis clients
             </span>{" "}
-            en 2 minutes
+            sur ton site en 2 minutes
           </h2>
 
           <p className="mt-6 text-lg text-gray-500 max-w-xl mx-auto leading-relaxed">
-            Partage un lien, collecte de la preuve sociale, affiche un mur de
-            témoignages sur ton site. Sans coder.
+            Tes clients laissent un avis via un lien. Tu l&apos;affiches sur ton
+            site en un copier-coller. Gratuit, sans coder.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -103,7 +103,7 @@ export default function Home() {
       </main>
 
       <footer className="border-t border-gray-200 px-6 py-6 text-center text-sm text-gray-400">
-        TestiWall &mdash; La preuve sociale qui convertit.
+        TestiWall &mdash; Collecte et affiche tes avis clients. Gratuitement.
       </footer>
     </div>
   );

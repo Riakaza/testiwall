@@ -32,6 +32,7 @@ create table public.testimonials (
   status text default 'unverified' check (status in ('unverified', 'pending', 'approved', 'rejected')),
   email_verified boolean default false,
   verification_token uuid,
+  submitted_from_ip text,
   created_at timestamptz default now(),
   constraint unique_email_per_space unique (space_id, author_email)
 );
@@ -118,3 +119,4 @@ create index idx_spaces_user_id on public.spaces(user_id);
 create index idx_spaces_slug on public.spaces(slug);
 create index idx_testimonials_space_id on public.testimonials(space_id);
 create index idx_testimonials_status on public.testimonials(status);
+create index idx_testimonials_ip_created on public.testimonials(submitted_from_ip, created_at);

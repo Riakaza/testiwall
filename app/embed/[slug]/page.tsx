@@ -91,8 +91,26 @@ export default async function EmbedPage({
                     {t.author_name.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <div style={{ fontSize: "14px", fontWeight: 600, color: "#111827" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "14px", fontWeight: 600, color: "#111827" }}>
                       {t.author_name}
+                      {t.email_verified && (
+                        <span style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "3px",
+                          fontSize: "10px",
+                          fontWeight: 500,
+                          color: "#059669",
+                          background: "#ecfdf5",
+                          padding: "2px 6px",
+                          borderRadius: "99px",
+                        }}>
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M20 6L9 17l-5-5"/>
+                          </svg>
+                          Vérifié
+                        </span>
+                      )}
                     </div>
                     {t.author_title && (
                       <div style={{ fontSize: "12px", color: "#6b7280" }}>

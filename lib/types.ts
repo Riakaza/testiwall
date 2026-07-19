@@ -27,5 +27,6 @@ export interface Testimonial {
   status: "unverified" | "pending" | "approved" | "rejected";
   email_verified: boolean;
   verification_token: string | null;
+  submitted_from_ip: string | null;
   created_at: string;
 }

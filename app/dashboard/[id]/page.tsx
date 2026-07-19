@@ -142,9 +142,15 @@ export default async function SpaceDetailPage({
 
             <div className="bg-accent/5 border border-accent/20 rounded-xl p-5">
               <p className="text-sm text-accent-dark">
-                <strong>Astuce :</strong> Pour tester, ouvre le lien de collecte dans un autre onglet et soumets un témoignage toi-même.
+                <strong>Astuce :</strong> Pour tester, ouvre le lien de collecte dans un autre onglet et soumets un témoignage toi-même. Tu peux aussi ajouter un témoignage manuellement ci-dessous.
               </p>
             </div>
+
+            {/* Ajouter manuellement même sans témoignages existants */}
+            <TestimonialManager
+              testimonials={(testimonials as Testimonial[]) || []}
+              spaceId={space.id}
+            />
           </div>
         ) : (
           <>

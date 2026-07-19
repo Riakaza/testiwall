@@ -168,7 +168,7 @@ export function CollectForm({
         disabled={loading}
         className="w-full py-3 bg-accent text-white rounded-xl font-medium hover:bg-accent-dark disabled:opacity-50 transition-all shadow-md shadow-accent/20 text-sm"
       >
-        {loading ? "Envoi en cours..." : "Envoyer mon témoignage"}
+        {loading ? "Traitement en cours..." : "Envoyer mon témoignage"}
       </button>
     </form>
   );

@@ -1,11 +1,22 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 function getSupabase() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
+}
+
+function getTransporter() {
+  return nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_APP_PASSWORD,
+    },
+  });
 }
 
 export async function GET(request: NextRequest) {
@@ -21,7 +32,7 @@ export async function GET(request: NextRequest) {
 
   const { data: testimonial } = await supabase
     .from("testimonials")
-    .select("id, status")
+    .select("id, status, author_name, space_id")
     .eq("verification_token", token)
     .single();
 
@@ -50,6 +61,47 @@ export async function GET(request: NextRequest) {
     return new NextResponse(page("Erreur", "Une erreur est survenue. Réessaie plus tard.", false), {
       headers: { "Content-Type": "text/html" },
     });
+  }
+
+  // Notify space owner by email
+  try {
+    const { data: space } = await supabase
+      .from("spaces")
+      .select("name, user_id")
+      .eq("id", testimonial.space_id)
+      .single();
+
+    if (space) {
+      const { data: owner } = await supabase
+        .from("profiles")
+        .select("email")
+        .eq("id", space.user_id)
+        .single();
+
+      if (owner?.email) {
+        const dashboardUrl = `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/${testimonial.space_id}`;
+        const transporter = getTransporter();
+        await transporter.sendMail({
+          from: `TestiWall <${process.env.GMAIL_USER}>`,
+          to: owner.email,
+          subject: "Nouveau témoignage à modérer — TestiWall",
+          html: `
+            <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 32px;">
+              <h2 style="color: #6366f1;">Nouveau témoignage à modérer</h2>
+              <p>Un nouveau témoignage a été soumis sur ton espace <strong>${space.name}</strong> par <strong>${testimonial.author_name}</strong>.</p>
+              <p>Connecte-toi à ton dashboard pour l'approuver ou le rejeter :</p>
+              <a href="${dashboardUrl}" style="display: inline-block; background: #6366f1; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 16px 0;">
+                Voir le témoignage
+              </a>
+              <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;" />
+              <p style="color: #9ca3af; font-size: 12px;">TestiWall — La preuve sociale qui convertit.</p>
+            </div>
+          `,
+        });
+      }
+    }
+  } catch {
+    // Don't block the verification if the notification email fails
   }
 
   return new NextResponse(page("Témoignage confirmé !", "Ton témoignage a été vérifié avec succès. Il sera visible une fois approuvé.", true), {

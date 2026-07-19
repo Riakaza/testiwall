@@ -69,10 +69,10 @@ Next.js App Router — pas de `src/` directory, tout à la racine.
 2. Unicité email — index unique `(space_id, author_email) WHERE status != 'unverified'`
 3. Vérification email — soumission → status `unverified` → email Resend avec token → clic → status `pending`
 
-**Resend (emails) :**
-- Plan gratuit : envoi uniquement à l'email du compte Resend tant qu'aucun domaine n'est vérifié
-- Expéditeur actuel : `onboarding@resend.dev` (domaine partagé → emails arrivent en spam)
-- Pour la prod : ajouter un domaine vérifié sur Resend (DNS) → emails depuis `noreply@tondomaine.fr` en boîte principale
+**Emails (Gmail SMTP via Nodemailer) :**
+- Envoi des emails de vérification via un compte Gmail + mot de passe d'application
+- Limite : 500 emails/jour (suffisant pour le MVP)
+- Les emails arrivent en boîte principale (pas en spam)
 
 **Database (Supabase Postgres):**
 - 3 tables : `profiles`, `spaces`, `testimonials`
@@ -111,7 +111,8 @@ Fichier `.env.local` (jamais commit) :
 NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 SUPABASE_SERVICE_ROLE_KEY=...
-RESEND_API_KEY=...
+GMAIL_USER=...
+GMAIL_APP_PASSWORD=...
 NEXT_PUBLIC_APP_URL=http://localhost:3000  (en prod: https://testiwall-kappa.vercel.app)
 ```
 
