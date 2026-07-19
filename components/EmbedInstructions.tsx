@@ -182,6 +182,14 @@ export function EmbedInstructions({ embedUrl, slug }: { embedUrl: string; slug: 
                 {customizedEmbedUrl}
               </code>
               <CopyButton text={customizedEmbedUrl} />
+              <a
+                href={customizedEmbedUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 px-4 py-2.5 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-dark transition-colors"
+              >
+                Ouvrir
+              </a>
             </div>
           </div>
           <p className="text-sm text-gray-500">

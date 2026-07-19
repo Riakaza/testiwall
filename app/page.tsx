@@ -62,6 +62,12 @@ export default function Home() {
             >
               Comment ça marche ?
             </Link>
+            <Link
+              href="#faq"
+              className="px-6 py-3.5 text-gray-600 font-medium hover:text-black transition-colors"
+            >
+              FAQ
+            </Link>
           </div>
         </div>
 
