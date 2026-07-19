@@ -176,6 +176,25 @@ export default async function SpaceDetailPage({
                 </div>
 
                 <div className="mt-6 pt-6 border-t border-gray-100">
+                  <h3 className="font-semibold text-gray-900 mb-1">Page publique Wall of Love</h3>
+                  <p className="text-sm text-gray-500 mb-3">Partage cette page pour montrer tous tes avis en un seul endroit.</p>
+                  <div className="flex items-center gap-2 mb-3">
+                    <code className="flex-1 px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm break-all font-mono">
+                      {`${baseUrl}/p/${space.slug}`}
+                    </code>
+                    <CopyButton text={`${baseUrl}/p/${space.slug}`} />
+                  </div>
+                  <a
+                    href={`/p/${space.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block border border-accent text-accent rounded-xl px-4 py-2.5 text-sm font-medium hover:bg-accent/5 transition-colors"
+                  >
+                    Voir le Wall of Love →
+                  </a>
+                </div>
+
+                <div className="mt-6 pt-6 border-t border-gray-100">
                   <h3 className="font-semibold text-gray-900 mb-1">Bouton à intégrer sur ton site</h3>
                   <p className="text-sm text-gray-500 mb-3">Copie ce code HTML et colle-le où tu veux sur ton site.</p>
                   <CollectButtonCode collectUrl={collectUrl} />

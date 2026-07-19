@@ -101,6 +101,92 @@ export default function Home() {
           </div>
         </div>
 
+        {/* FAQ */}
+        <div id="faq" className="mt-20 mb-20 max-w-4xl w-full mx-auto animate-fade-in">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              Questions fréquentes
+            </h3>
+            <p className="text-gray-500 text-sm">
+              Tout ce que tu dois savoir avant de te lancer.
+            </p>
+          </div>
+
+          <div className="max-w-2xl mx-auto">
+            <details className="group border-b border-gray-200">
+              <summary className="flex items-center justify-between py-5 text-left font-medium text-gray-900 cursor-pointer hover:text-accent list-none [&::-webkit-details-marker]:hidden">
+                <span>Est-ce vraiment gratuit ?</span>
+                <svg className="h-5 w-5 text-gray-500 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <p className="pb-5 text-sm text-gray-600 leading-relaxed">
+                Oui, 100%. Pas de plan payant caché, pas de limite sur le nombre de témoignages ou d&apos;espaces.
+              </p>
+            </details>
+
+            <details className="group border-b border-gray-200">
+              <summary className="flex items-center justify-between py-5 text-left font-medium text-gray-900 cursor-pointer hover:text-accent list-none [&::-webkit-details-marker]:hidden">
+                <span>Comment mes clients laissent un témoignage ?</span>
+                <svg className="h-5 w-5 text-gray-500 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <p className="pb-5 text-sm text-gray-600 leading-relaxed">
+                Tu leur envoies un lien. Ils remplissent un formulaire simple (nom, email, note, message). Leur email est vérifié automatiquement.
+              </p>
+            </details>
+
+            <details className="group border-b border-gray-200">
+              <summary className="flex items-center justify-between py-5 text-left font-medium text-gray-900 cursor-pointer hover:text-accent list-none [&::-webkit-details-marker]:hidden">
+                <span>Je peux choisir quels témoignages afficher ?</span>
+                <svg className="h-5 w-5 text-gray-500 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <p className="pb-5 text-sm text-gray-600 leading-relaxed">
+                Oui. Chaque témoignage passe par toi d&apos;abord. Tu approuves, rejettes ou supprimes depuis ton dashboard.
+              </p>
+            </details>
+
+            <details className="group border-b border-gray-200">
+              <summary className="flex items-center justify-between py-5 text-left font-medium text-gray-900 cursor-pointer hover:text-accent list-none [&::-webkit-details-marker]:hidden">
+                <span>Ça marche sur quel type de site ?</span>
+                <svg className="h-5 w-5 text-gray-500 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <p className="pb-5 text-sm text-gray-600 leading-relaxed">
+                Tous. WordPress, Wix, Webflow, Carrd, Shopify, HTML... C&apos;est un simple copier-coller d&apos;iframe.
+              </p>
+            </details>
+
+            <details className="group border-b border-gray-200">
+              <summary className="flex items-center justify-between py-5 text-left font-medium text-gray-900 cursor-pointer hover:text-accent list-none [&::-webkit-details-marker]:hidden">
+                <span>Les témoignages sont-ils vérifiés ?</span>
+                <svg className="h-5 w-5 text-gray-500 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <p className="pb-5 text-sm text-gray-600 leading-relaxed">
+                Oui. Chaque personne doit confirmer son email avant que le témoignage soit visible. Un badge &quot;vérifié&quot; s&apos;affiche.
+              </p>
+            </details>
+
+            <details className="group border-b border-gray-200">
+              <summary className="flex items-center justify-between py-5 text-left font-medium text-gray-900 cursor-pointer hover:text-accent list-none [&::-webkit-details-marker]:hidden">
+                <span>Je peux personnaliser le widget ?</span>
+                <svg className="h-5 w-5 text-gray-500 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <p className="pb-5 text-sm text-gray-600 leading-relaxed">
+                Oui. Tu peux changer la couleur d&apos;accent et activer le mode sombre pour matcher ton site.
+              </p>
+            </details>
+          </div>
+        </div>
+
         {/* Dogfooding Widget Section */}
         <div className="w-full max-w-4xl mx-auto mb-20 text-center animate-fade-in">
           <h3 className="text-2xl font-bold mb-2">

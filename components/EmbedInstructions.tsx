@@ -7,8 +7,24 @@ type Tab = "simple" | "iframe" | "link";
 
 export function EmbedInstructions({ embedUrl, slug }: { embedUrl: string; slug: string }) {
   const [tab, setTab] = useState<Tab>("simple");
+  const [accent, setAccent] = useState("6366f1");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
-  const iframeCode = `<iframe src="${embedUrl}" width="100%" height="500" frameborder="0" style="border:none;border-radius:12px;"></iframe>`;
+  const params: string[] = [];
+  if (accent !== "6366f1") params.push(`accent=${accent}`);
+  if (theme !== "light") params.push(`theme=${theme}`);
+  const customizedEmbedUrl = params.length > 0 ? `${embedUrl}?${params.join("&")}` : embedUrl;
+
+  const iframeCode = `<iframe src="${customizedEmbedUrl}" width="100%" height="500" frameborder="0" style="border:none;border-radius:12px;"></iframe>`;
+
+  const colors = [
+    { hex: "6366f1", label: "Indigo" },
+    { hex: "e11d48", label: "Rose" },
+    { hex: "10b981", label: "Émeraude" },
+    { hex: "f59e0b", label: "Ambre" },
+    { hex: "8b5cf6", label: "Violet" },
+    { hex: "000000", label: "Noir" },
+  ];
 
   const tabs: { id: Tab; label: string; desc: string }[] = [
     { id: "simple", label: "Copier-coller", desc: "Carrd, WordPress, Wix, Webflow..." },
@@ -18,6 +34,82 @@ export function EmbedInstructions({ embedUrl, slug }: { embedUrl: string; slug: 
 
   return (
     <div>
+      {/* Personnalisation */}
+      <div className="mb-6 p-5 bg-gray-50 rounded-xl border border-gray-200">
+        <h4 className="text-sm font-medium text-gray-700 mb-4">Personnaliser le widget</h4>
+
+        <div className="flex flex-col sm:flex-row gap-5">
+          {/* Thème */}
+          <div>
+            <span className="block text-xs font-medium text-gray-500 mb-2">Thème</span>
+            <div className="inline-flex rounded-xl overflow-hidden border border-gray-200">
+              <button
+                onClick={() => setTheme("light")}
+                className={`px-4 py-2 text-sm font-medium transition-all ${
+                  theme === "light"
+                    ? "bg-accent text-white"
+                    : "bg-white text-gray-600 hover:bg-gray-50"
+                }`}
+              >
+                Clair
+              </button>
+              <button
+                onClick={() => setTheme("dark")}
+                className={`px-4 py-2 text-sm font-medium transition-all ${
+                  theme === "dark"
+                    ? "bg-accent text-white"
+                    : "bg-white text-gray-600 hover:bg-gray-50"
+                }`}
+              >
+                Sombre
+              </button>
+            </div>
+          </div>
+
+          {/* Couleur */}
+          <div>
+            <span className="block text-xs font-medium text-gray-500 mb-2">Couleur d&apos;accent</span>
+            <div className="flex items-center gap-2">
+              {colors.map((c) => (
+                <button
+                  key={c.hex}
+                  onClick={() => setAccent(c.hex)}
+                  title={c.label}
+                  style={{ backgroundColor: `#${c.hex}` }}
+                  className={`w-7 h-7 rounded-full cursor-pointer border-2 transition-all ${
+                    accent === c.hex
+                      ? "border-gray-900 scale-110"
+                      : "border-transparent hover:scale-105"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Aperçu */}
+        <div
+          className={`rounded-xl p-4 mt-4 flex items-center justify-between transition-colors ${
+            theme === "dark" ? "bg-gray-900" : "bg-white border border-gray-200"
+          }`}
+        >
+          <span className={`text-xs ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}>Aperçu</span>
+          <div className="flex items-center gap-2">
+            <div
+              style={{ backgroundColor: `#${accent}` }}
+              className="w-5 h-5 rounded-full"
+            />
+            <span
+              style={{ color: `#${accent}` }}
+              className="text-sm font-semibold"
+            >
+              TestiWall
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Onglets */}
       <div className="flex gap-2 mb-5">
         {tabs.map((t) => (
           <button
@@ -87,9 +179,9 @@ export function EmbedInstructions({ embedUrl, slug }: { embedUrl: string; slug: 
             </p>
             <div className="flex items-center gap-2">
               <code className="flex-1 p-3 bg-white border border-gray-200 rounded-lg text-sm break-all font-mono text-gray-700">
-                {embedUrl}
+                {customizedEmbedUrl}
               </code>
-              <CopyButton text={embedUrl} />
+              <CopyButton text={customizedEmbedUrl} />
             </div>
           </div>
           <p className="text-sm text-gray-500">
