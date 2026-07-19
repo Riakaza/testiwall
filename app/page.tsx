@@ -37,12 +37,12 @@ export default function Home() {
         </div>
 
         {/* CTA sous le hero */}
-        <div className="text-center mt-12 animate-fade-in">
-          <div className="inline-block px-4 py-1.5 bg-accent/10 text-accent text-sm font-medium rounded-full mb-6">
+        <div className="text-center mt-8 sm:mt-12 animate-fade-in px-2">
+          <div className="inline-block px-4 py-1.5 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4 sm:mb-6">
             100% gratuit — aucune carte bancaire
           </div>
 
-          <h2 className="text-4xl sm:text-5xl font-bold max-w-3xl leading-[1.1] tracking-tight mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold max-w-3xl leading-[1.15] tracking-tight mx-auto">
             Un mur d&apos;{" "}
             <span className="bg-gradient-to-r from-accent to-purple-500 bg-clip-text text-transparent">
               avis clients
@@ -50,13 +50,13 @@ export default function Home() {
             sur ton site en 2 minutes
           </h2>
 
-          <p className="mt-6 text-lg text-gray-500 max-w-xl mx-auto leading-relaxed">
+          <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed">
             Tes clients laissent un avis via un lien. Tu l&apos;affiches sur ton
             site en un copier-coller. Gratuit, sans coder.
           </p>
           <p className="text-xs text-gray-400 mt-2">Gratuit aujourd&apos;hui. Un plan Pro arrivera pour les features avancées.</p>
 
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
             <Link
               href="/signup"
               className="px-8 py-3.5 bg-accent text-white rounded-xl text-lg font-semibold hover:bg-accent-dark transition-all shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35 hover:-translate-y-0.5"
@@ -73,7 +73,7 @@ export default function Home() {
         </div>
 
         {/* How it works */}
-        <div id="how" className="mt-32 mb-20 max-w-4xl w-full animate-fade-in">
+        <div id="how" className="mt-16 sm:mt-32 mb-12 sm:mb-20 max-w-4xl w-full animate-fade-in">
           <h3 className="text-2xl font-bold text-center mb-12">
             Simple comme 1, 2, 3
           </h3>
@@ -109,7 +109,7 @@ export default function Home() {
         </div>
 
         {/* FAQ */}
-        <div id="faq" className="mt-20 mb-20 max-w-4xl w-full mx-auto animate-fade-in">
+        <div id="faq" className="mt-12 sm:mt-20 mb-12 sm:mb-20 max-w-4xl w-full mx-auto px-2 animate-fade-in">
           <div className="text-center mb-8">
             <h3 className="text-2xl font-bold text-gray-900 mb-2">
               Questions fréquentes
@@ -195,7 +195,7 @@ export default function Home() {
         </div>
 
         {/* Dogfooding Widget Section */}
-        <div className="w-full max-w-4xl mx-auto mb-20 text-center animate-fade-in">
+        <div className="w-full max-w-4xl mx-auto mb-12 sm:mb-20 text-center animate-fade-in px-2">
           <h3 className="text-2xl font-bold mb-2">
             Ce que nos utilisateurs en pensent
           </h3>

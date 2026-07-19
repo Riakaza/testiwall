@@ -53,3 +53,9 @@ textarea:focus {
 .animate-scale-in {
   animation: scale-in 0.3s ease-out forwards;
 }
+
+@media (max-width: 640px) {
+  section, [id] {
+    scroll-margin-top: 80px;
+  }
+}
