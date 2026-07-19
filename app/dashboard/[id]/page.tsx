@@ -5,6 +5,7 @@ import { TestimonialManager } from "@/components/TestimonialManager";
 import { LogoutButton } from "@/components/LogoutButton";
 import { CopyButton } from "@/components/CopyButton";
 import { InviteCopyButton } from "@/components/InviteCopyButton";
+import { CollectButtonCode } from "@/components/CollectButtonCode";
 import { EmbedInstructions } from "@/components/EmbedInstructions";
 import type { Testimonial } from "@/lib/types";
 import { headers } from "next/headers";
@@ -171,6 +172,12 @@ export default async function SpaceDetailPage({
                 </div>
                 <div className="mt-3">
                   <InviteCopyButton collectUrl={collectUrl} spaceName={space.name} />
+                </div>
+
+                <div className="mt-6 pt-6 border-t border-gray-100">
+                  <h3 className="font-semibold text-gray-900 mb-1">Bouton à intégrer sur ton site</h3>
+                  <p className="text-sm text-gray-500 mb-3">Copie ce code HTML et colle-le où tu veux sur ton site.</p>
+                  <CollectButtonCode collectUrl={collectUrl} />
                 </div>
               </div>
 
