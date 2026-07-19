@@ -10,6 +10,12 @@ export default function Home() {
         </h1>
         <div className="flex gap-3 items-center">
           <Link
+            href="#faq"
+            className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-accent transition-colors"
+          >
+            FAQ
+          </Link>
+          <Link
             href="/login"
             className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-black transition-colors"
           >
@@ -61,12 +67,6 @@ export default function Home() {
               className="px-6 py-3.5 text-gray-600 font-medium hover:text-black transition-colors"
             >
               Comment ça marche ?
-            </Link>
-            <Link
-              href="#faq"
-              className="px-6 py-3.5 text-gray-600 font-medium hover:text-black transition-colors"
-            >
-              FAQ
             </Link>
           </div>
         </div>
@@ -220,6 +220,20 @@ export default function Home() {
           </div>
         </div>
       </main>
+
+      <section id="contact" className="bg-white border-t py-16 text-center">
+        <div className="max-w-xl mx-auto px-6">
+          <h3 className="text-2xl font-bold mb-2">Un problème ? Une idée ?</h3>
+          <p className="text-gray-600 mb-8">Contacte-moi directement par email — je réponds vite.</p>
+          <a
+            href="mailto:zakariaxarmyxblink@gmail.com"
+            className="inline-block bg-accent text-white rounded-xl px-6 py-3 font-medium hover:bg-accent-dark transition-colors shadow-md shadow-accent/20"
+          >
+            M&apos;envoyer un email
+          </a>
+          <p className="text-xs text-gray-400 mt-4">Tu peux aussi proposer une feature ou signaler un bug.</p>
+        </div>
+      </section>
 
       <footer className="border-t border-gray-200 px-6 py-6 text-center text-sm text-gray-400">
         TestiWall &mdash; Collecte et affiche tes avis clients. Gratuitement.
