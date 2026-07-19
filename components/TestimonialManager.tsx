@@ -58,7 +58,7 @@ export function TestimonialManager({
       content: addForm.content.trim(),
       rating: addForm.rating,
       status: "approved",
-      email_verified: true,
+      email_verified: false,
       verification_token: null,
     });
 

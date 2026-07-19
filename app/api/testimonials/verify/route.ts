@@ -72,11 +72,7 @@ export async function GET(request: NextRequest) {
       .single();
 
     if (space) {
-      const { data: owner } = await supabase
-        .from("profiles")
-        .select("email")
-        .eq("id", space.user_id)
-        .single();
+      const { data: { user: owner } } = await supabase.auth.admin.getUserById(space.user_id);
 
       if (owner?.email) {
         const dashboardUrl = `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/${testimonial.space_id}`;
