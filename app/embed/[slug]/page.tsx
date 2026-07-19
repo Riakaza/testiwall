@@ -57,9 +57,9 @@ export default async function EmbedPage({
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-            gap: "20px",
-            padding: "20px",
+            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+            gap: "16px",
+            padding: "16px",
           }}
         >
           {testimonials && testimonials.length > 0 ? (

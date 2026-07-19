@@ -7,6 +7,8 @@ import { CopyButton } from "@/components/CopyButton";
 import { InviteCopyButton } from "@/components/InviteCopyButton";
 import { CollectButtonCode } from "@/components/CollectButtonCode";
 import { EmbedInstructions } from "@/components/EmbedInstructions";
+import { ImportCSV } from "@/components/ImportCSV";
+import { ExportCSV } from "@/components/ExportCSV";
 import type { Testimonial } from "@/lib/types";
 import { headers } from "next/headers";
 
@@ -57,7 +59,7 @@ export default async function SpaceDetailPage({
             <span className="text-accent">Testi</span>Wall
           </Link>
           <span className="text-gray-300">/</span>
-          <span className="font-medium text-gray-700">{space.name}</span>
+          <span className="font-medium text-gray-700 truncate max-w-[150px] sm:max-w-none">{space.name}</span>
         </div>
         <LogoutButton />
       </nav>
@@ -205,6 +207,16 @@ export default async function SpaceDetailPage({
                 <h3 className="font-semibold text-gray-900 mb-1">Afficher sur ton site</h3>
                 <p className="text-sm text-gray-500 mb-4">Choisis la méthode qui correspond à ton site :</p>
                 <EmbedInstructions embedUrl={embedUrl} slug={space.slug} />
+              </div>
+            </div>
+
+            {/* Import / Export */}
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-8 shadow-sm">
+              <h3 className="font-semibold text-gray-900 mb-1">Importer / Exporter</h3>
+              <p className="text-sm text-gray-500 mb-4">Importe tes témoignages existants ou exporte tes données.</p>
+              <div className="flex flex-wrap gap-3">
+                <ImportCSV spaceId={space.id} />
+                <ExportCSV testimonials={(testimonials as Testimonial[]) || []} spaceName={space.slug} />
               </div>
             </div>
 
