@@ -27,7 +27,7 @@ export function LazySplineHero() {
           observer.disconnect()
         }
       },
-      { rootMargin: '200px' }
+      { rootMargin: '50px' }
     )
 
     if (containerRef.current) {
@@ -38,7 +38,7 @@ export function LazySplineHero() {
   }, [])
 
   return (
-    <div ref={containerRef} className="w-full min-h-[500px] relative">
+    <div ref={containerRef} className="w-full min-h-[300px] sm:min-h-[400px] md:min-h-[500px] relative">
       {isVisible ? <SplineSceneBasic /> : <SplineLoader />}
     </div>
   )

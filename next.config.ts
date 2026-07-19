@@ -1,8 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  experimental: {
-    optimizePackageImports: ["framer-motion"],
+  serverExternalPackages: ["nodemailer"],
+  images: {
+    formats: ["image/avif", "image/webp"],
   },
 };
 
