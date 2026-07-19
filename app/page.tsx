@@ -207,6 +207,7 @@ export default function Home() {
             <iframe
               src="/embed/testiwall"
               className="w-full h-[400px] border-none"
+              loading="lazy"
               title="TestiWall Widget"
             />
           </div>
