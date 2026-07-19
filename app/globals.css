@@ -19,10 +19,19 @@
   --font-mono: var(--font-geist-mono);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
+html, body {
+  background-color: #fafafa !important;
+  color: #0f0f0f !important;
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  forced-color-adjust: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html, body {
+    background-color: #fafafa !important;
+    color: #0f0f0f !important;
+    forced-color-adjust: none;
+  }
 }
 
 ::selection {
