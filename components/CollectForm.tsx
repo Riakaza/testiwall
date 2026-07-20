@@ -113,26 +113,6 @@ export function CollectForm({
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1.5">
-          Note
-        </label>
-        <div className="flex gap-1">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <button
-              key={star}
-              type="button"
-              onClick={() => setRating(star)}
-              className={`text-3xl transition-all hover:scale-110 ${
-                star <= rating ? "text-amber-400" : "text-gray-200"
-              }`}
-            >
-              ★
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1.5">
           Ton témoignage <span className="text-red-400">*</span>
         </label>
         <textarea

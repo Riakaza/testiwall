@@ -16,17 +16,7 @@ export function TestimonialManager({
 }) {
   const [filter, setFilter] = useState<"all" | "pending" | "approved" | "rejected">("all");
   const [sort, setSort] = useState<"recent" | "oldest" | "rating">("recent");
-  const [showAddModal, setShowAddModal] = useState(false);
   const [shareOpenId, setShareOpenId] = useState<string | null>(null);
-  const [addForm, setAddForm] = useState({
-    author_name: "",
-    author_email: "",
-    author_title: "",
-    content: "",
-    rating: 5,
-  });
-  const [addLoading, setAddLoading] = useState(false);
-  const [addError, setAddError] = useState("");
   const router = useRouter();
 
   const verified = testimonials.filter((t) => t.status !== "unverified");
@@ -51,37 +41,6 @@ export function TestimonialManager({
     router.refresh();
   }
 
-  async function handleAddTestimonial(e: React.FormEvent) {
-    e.preventDefault();
-    if (!addForm.author_name.trim() || !addForm.content.trim()) return;
-
-    setAddLoading(true);
-    setAddError("");
-
-    const supabase = createClient();
-    const { error: insertError } = await supabase.from("testimonials").insert({
-      space_id: spaceId,
-      author_name: addForm.author_name.trim(),
-      author_email: addForm.author_email.trim() || "manual@added.local",
-      author_title: addForm.author_title.trim() || null,
-      content: addForm.content.trim(),
-      rating: addForm.rating,
-      status: "approved",
-      email_verified: false,
-      verification_token: null,
-    });
-
-    if (insertError) {
-      setAddError(insertError.message);
-      setAddLoading(false);
-    } else {
-      setAddForm({ author_name: "", author_email: "", author_title: "", content: "", rating: 5 });
-      setShowAddModal(false);
-      setAddLoading(false);
-      router.refresh();
-    }
-  }
-
   const counts = {
     all: verified.length,
     pending: verified.filter((t) => t.status === "pending").length,
@@ -100,135 +59,8 @@ export function TestimonialManager({
     <div>
       <div className="flex items-center justify-between mb-5">
         <h3 className="text-lg font-bold text-gray-900">Témoignages</h3>
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-accent text-white rounded-xl font-medium hover:bg-accent-dark transition-all shadow-md shadow-accent/20 text-sm"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-          </svg>
-          Ajouter un témoignage
-        </button>
       </div>
 
-      {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-            onClick={() => setShowAddModal(false)}
-          />
-          <div className="relative bg-white rounded-2xl shadow-xl border border-gray-200 w-full max-w-lg p-6 animate-scale-in">
-            <div className="flex items-center justify-between mb-6">
-              <h4 className="text-lg font-bold text-gray-900">Ajouter un témoignage</h4>
-              <button
-                onClick={() => setShowAddModal(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            <form onSubmit={handleAddTestimonial} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Nom de l&apos;auteur <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={addForm.author_name}
-                  onChange={(e) => setAddForm({ ...addForm, author_name: e.target.value })}
-                  placeholder="Jean Dupont"
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm bg-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email <span className="text-gray-400 text-xs">(optionnel)</span>
-                </label>
-                <input
-                  type="email"
-                  value={addForm.author_email}
-                  onChange={(e) => setAddForm({ ...addForm, author_email: e.target.value })}
-                  placeholder="jean@example.com"
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm bg-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Titre / Entreprise <span className="text-gray-400 text-xs">(optionnel)</span>
-                </label>
-                <input
-                  type="text"
-                  value={addForm.author_title}
-                  onChange={(e) => setAddForm({ ...addForm, author_title: e.target.value })}
-                  placeholder="CEO chez Startup"
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm bg-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Témoignage <span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  required
-                  rows={3}
-                  value={addForm.content}
-                  onChange={(e) => setAddForm({ ...addForm, content: e.target.value })}
-                  placeholder="Un super service, je recommande..."
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm bg-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all resize-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Note
-                </label>
-                <div className="flex gap-1">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      type="button"
-                      onClick={() => setAddForm({ ...addForm, rating: star })}
-                      className={`text-2xl transition-colors ${
-                        star <= addForm.rating ? "text-amber-400" : "text-gray-200"
-                      } hover:text-amber-300`}
-                    >
-                      ★
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {addError && (
-                <p className="text-red-600 text-sm">{addError}</p>
-              )}
-
-              <div className="flex gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setShowAddModal(false)}
-                  className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-all text-sm"
-                >
-                  Annuler
-                </button>
-                <button
-                  type="submit"
-                  disabled={addLoading}
-                  className="flex-1 px-4 py-2.5 bg-accent text-white rounded-xl font-medium hover:bg-accent-dark disabled:opacity-50 transition-all shadow-md shadow-accent/20 text-sm"
-                >
-                  {addLoading ? "Ajout..." : "Ajouter"}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
 
       <div className="flex flex-wrap items-center gap-2 mb-6">
         {(["all", "pending", "approved", "rejected"] as const).map((f) => (
