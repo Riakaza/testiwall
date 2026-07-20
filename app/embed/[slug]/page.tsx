@@ -53,6 +53,9 @@ export default async function EmbedPage({
   if (sortParam === "rating") sorted.sort((a: Testimonial, b: Testimonial) => b.rating - a.rating);
   else if (sortParam === "oldest") sorted.sort((a: Testimonial, b: Testimonial) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
 
+  const layoutParam = typeof resolvedSearchParams.layout === "string" ? resolvedSearchParams.layout : "grid";
+  const isCarousel = layoutParam === "carousel";
+
   const theme = {
     bodyBg: isDark ? "#1f2937" : "transparent",
     cardBg: isDark ? "#374151" : "#ffffff",
@@ -72,7 +75,14 @@ export default async function EmbedPage({
     <html style={{ background: theme.bodyBg }}>
       <body style={{ margin: 0, fontFamily: "'Inter', system-ui, -apple-system, sans-serif", background: "transparent" }}>
         <div
-          style={{
+          style={isCarousel ? {
+            display: "flex",
+            overflowX: "auto",
+            scrollSnapType: "x mandatory",
+            gap: "16px",
+            padding: "16px",
+            WebkitOverflowScrolling: "touch",
+          } : {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
             gap: "16px",
@@ -90,6 +100,7 @@ export default async function EmbedPage({
                   background: theme.cardBg,
                   boxShadow: theme.boxShadow,
                   transition: "box-shadow 0.2s, transform 0.2s",
+                  ...(isCarousel ? { minWidth: "320px", flexShrink: 0, scrollSnapAlign: "start" } : {}),
                 }}
               >
                 <div style={{ display: "flex", gap: "2px", marginBottom: "12px" }}>

@@ -15,6 +15,7 @@ export function CollectForm({
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(5);
   const [website, setWebsite] = useState("");
+  const [consent, setConsent] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -143,9 +144,22 @@ export function CollectForm({
         </div>
       )}
 
+      <div className="flex items-start gap-2">
+        <input
+          type="checkbox"
+          id="consent"
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-0.5 accent-accent"
+        />
+        <label htmlFor="consent" className="text-xs text-gray-500">
+          J&apos;autorise l&apos;utilisation publique de ce témoignage sur le site du propriétaire.
+        </label>
+      </div>
+
       <button
         type="submit"
-        disabled={loading}
+        disabled={loading || !consent}
         className="w-full py-3 bg-accent text-white rounded-xl font-medium hover:bg-accent-dark disabled:opacity-50 transition-all shadow-md shadow-accent/20 text-sm"
       >
         {loading ? "Traitement en cours..." : "Envoyer mon témoignage"}

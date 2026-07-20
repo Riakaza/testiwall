@@ -39,22 +39,20 @@ export default function Home() {
         {/* CTA sous le hero */}
         <div className="text-center mt-4 sm:mt-10 animate-fade-in px-2">
           <div className="inline-block px-4 py-1.5 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4 sm:mb-6">
-            100% gratuit — aucune carte bancaire
+            Rejoins les makers qui convertissent leurs visiteurs
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold max-w-3xl leading-[1.15] tracking-tight mx-auto">
-            Un mur d&apos;{" "}
+            Transforme tes clients satisfaits en{" "}
             <span className="bg-gradient-to-r from-accent to-purple-500 bg-clip-text text-transparent">
-              avis clients
-            </span>{" "}
-            sur ton site en 2 minutes
+              ton meilleur argument de vente
+            </span>
           </h2>
 
           <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed">
-            Tes clients laissent un avis via un lien. Tu l&apos;affiches sur ton
-            site en un copier-coller. Gratuit, sans coder.
+            Collecte et affiche tes témoignages en un clic. Rassure tes prospects instantanément et transforme les curieux en acheteurs.
           </p>
-          <p className="text-xs text-gray-400 mt-2">Gratuit aujourd&apos;hui. Un plan Pro arrivera pour les features avancées.</p>
+          <p className="text-xs text-gray-400 mt-2">100% gratuit, sans carte bancaire. Un plan Pro arrivera pour les features avancées.</p>
 
           <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
             <Link
