@@ -33,6 +33,7 @@ create table public.testimonials (
   email_verified boolean default false,
   verification_token uuid,
   submitted_from_ip text,
+  consent boolean default false not null,
   created_at timestamptz default now(),
   constraint unique_email_per_space unique (space_id, author_email)
 );

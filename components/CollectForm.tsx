@@ -36,6 +36,7 @@ export function CollectForm({
         content: content.trim(),
         rating,
         website,
+        consent,
       }),
     });
 
@@ -153,7 +154,7 @@ export function CollectForm({
           className="mt-0.5 accent-accent"
         />
         <label htmlFor="consent" className="text-xs text-gray-500">
-          J&apos;autorise l&apos;utilisation publique de ce témoignage sur le site du propriétaire.
+          J&apos;autorise l&apos;utilisation publique de ce témoignage à des fins marketing.
         </label>
       </div>
 

@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true });
   }
 
-  const { space_id, author_name, author_email, author_title, content, rating } = body;
+  const { space_id, author_name, author_email, author_title, content, rating, consent } = body;
 
   if (!space_id || !author_name || !author_email || !content) {
     return NextResponse.json({ error: "Champs requis manquants." }, { status: 400 });
@@ -89,6 +89,7 @@ export async function POST(request: NextRequest) {
     email_verified: false,
     verification_token: token,
     submitted_from_ip: ip,
+    consent: consent === true,
   });
 
   if (insertError) {
