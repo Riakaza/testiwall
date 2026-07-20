@@ -37,36 +37,30 @@ export default function Home() {
         </div>
 
         {/* CTA sous le hero */}
-        <div className="text-center mt-4 sm:mt-10 animate-fade-in px-2">
-          <div className="inline-block px-4 py-1.5 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4 sm:mb-6">
-            Rejoins les makers qui convertissent leurs visiteurs
+        <div className="text-center mt-4 sm:mt-10 max-w-3xl mx-auto px-4 animate-fade-in">
+          <div className="inline-flex items-center px-3 py-1 mb-4 sm:mb-6 rounded-full bg-accent/10 text-accent text-sm font-medium border border-accent/20">
+            Le secret des landing pages qui convertissent
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold max-w-3xl leading-[1.15] tracking-tight mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 tracking-tight leading-[1.15]">
             Transforme tes clients satisfaits en{" "}
             <span className="bg-gradient-to-r from-accent to-purple-500 bg-clip-text text-transparent">
               ton meilleur argument de vente
             </span>
           </h2>
 
-          <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed">
-            Collecte et affiche tes témoignages en un clic. Rassure tes prospects instantanément et transforme les curieux en acheteurs.
+          <p className="text-base sm:text-lg text-gray-500 mb-8 sm:mb-10 leading-relaxed max-w-xl mx-auto">
+            Collecte des témoignages texte en quelques clics, sans toucher au code. Pas de site ? On héberge ton mur d&apos;avis pour toi.
           </p>
-          <p className="text-xs text-gray-400 mt-2">100% gratuit, sans carte bancaire. Un plan Pro arrivera pour les features avancées.</p>
 
-          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+          <div className="flex flex-col items-center gap-3">
             <Link
               href="/signup"
               className="px-8 py-3.5 bg-accent text-white rounded-xl text-lg font-semibold hover:bg-accent-dark transition-all shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35 hover:-translate-y-0.5"
             >
               Créer mon espace gratuit
             </Link>
-            <Link
-              href="#how"
-              className="px-6 py-3.5 text-gray-600 font-medium hover:text-black transition-colors"
-            >
-              Comment ça marche ?
-            </Link>
+            <span className="text-sm text-gray-400">Sans carte bancaire requise</span>
           </div>
         </div>
 
