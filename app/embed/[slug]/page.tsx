@@ -74,14 +74,19 @@ export default async function EmbedPage({
   return (
     <html style={{ background: theme.bodyBg }}>
       <body style={{ margin: 0, fontFamily: "'Inter', system-ui, -apple-system, sans-serif", background: "transparent" }}>
+        {isCarousel && <style dangerouslySetInnerHTML={{ __html: `[data-carousel]::-webkit-scrollbar { display: none; }` }} />}
         <div
+          data-carousel={isCarousel ? "" : undefined}
           style={isCarousel ? {
             display: "flex",
             overflowX: "auto",
             scrollSnapType: "x mandatory",
+            scrollBehavior: "smooth",
             gap: "16px",
-            padding: "16px",
+            padding: "16px 16px 16px 16px",
             WebkitOverflowScrolling: "touch",
+            msOverflowStyle: "none",
+            scrollbarWidth: "none",
           } : {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
@@ -100,7 +105,7 @@ export default async function EmbedPage({
                   background: theme.cardBg,
                   boxShadow: theme.boxShadow,
                   transition: "box-shadow 0.2s, transform 0.2s",
-                  ...(isCarousel ? { minWidth: "320px", flexShrink: 0, scrollSnapAlign: "start" } : {}),
+                  ...(isCarousel ? { minWidth: "300px", maxWidth: "85vw", flexShrink: 0, scrollSnapAlign: "start", scrollSnapStop: "always" } : {}),
                 }}
               >
                 <div style={{ display: "flex", gap: "2px", marginBottom: "12px" }}>
