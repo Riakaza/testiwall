@@ -104,6 +104,9 @@ export const translations = {
         subtitle: "Collect text testimonials in a few clicks, no coding needed. No website? We host your review wall for you.",
         cta: "Create my free space",
         noCreditCard: "No credit card required",
+        splineTitle: "Social proof.",
+        splineSubtitle: "Effortless.",
+        splineDesc: "Collect your clients' testimonials and display them on your site in a few clicks. Free, fast, no code.",
       },
       howItWorks: {
         title: "Simple as 1, 2, 3",
@@ -258,6 +261,9 @@ export const translations = {
         subtitle: "Collecte des témoignages texte en quelques clics, sans toucher au code. Pas de site ? On héberge ton mur d'avis pour toi.",
         cta: "Créer mon espace gratuit",
         noCreditCard: "Sans carte bancaire requise",
+        splineTitle: "Preuve sociale.",
+        splineSubtitle: "Sans effort.",
+        splineDesc: "Collecte les témoignages de tes clients et affiche-les sur ton site en quelques clics. Gratuit, rapide, sans code.",
       },
       howItWorks: {
         title: "Simple comme 1, 2, 3",
