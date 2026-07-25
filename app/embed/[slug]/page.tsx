@@ -7,11 +7,11 @@ function timeAgo(dateStr: string): string {
   const date = new Date(dateStr);
   const diffMs = now.getTime() - date.getTime();
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-  if (diffDays === 0) return "Aujourd'hui";
-  if (diffDays === 1) return "Hier";
-  if (diffDays < 30) return `Il y a ${diffDays} jours`;
-  if (diffDays < 365) return `Il y a ${Math.floor(diffDays / 30)} mois`;
-  return new Date(dateStr).toLocaleDateString("fr-FR");
+  if (diffDays === 0) return "Today";
+  if (diffDays === 1) return "Yesterday";
+  if (diffDays < 30) return `${diffDays} days ago`;
+  if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
+  return new Date(dateStr).toLocaleDateString("en-US");
 }
 
 export default async function EmbedPage({
@@ -34,14 +34,7 @@ export default async function EmbedPage({
 
   if (!space) notFound();
 
-  const { data: testimonials } = await supabase
-    .from("testimonials")
-    .select("*")
-    .eq("space_id", space.id)
-    .eq("status", "approved")
-    .order("created_at", { ascending: false })
-    .limit(20);
-
+  // Parse params
   const rawAccent = typeof resolvedSearchParams.accent === "string" ? resolvedSearchParams.accent : "";
   const accentColor = /^[0-9a-fA-F]{6}$/.test(rawAccent) ? rawAccent : "6366f1";
 
@@ -49,12 +42,30 @@ export default async function EmbedPage({
   const isDark = themeParam === "dark";
 
   const sortParam = typeof resolvedSearchParams.sort === "string" ? resolvedSearchParams.sort : "recent";
-  const sorted = [...(testimonials || [])];
-  if (sortParam === "rating") sorted.sort((a: Testimonial, b: Testimonial) => b.rating - a.rating);
-  else if (sortParam === "oldest") sorted.sort((a: Testimonial, b: Testimonial) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
 
   const layoutParam = typeof resolvedSearchParams.layout === "string" ? resolvedSearchParams.layout : "grid";
   const isCarousel = layoutParam === "carousel";
+
+  const fontSizeParam = typeof resolvedSearchParams.fontSize === "string" ? resolvedSearchParams.fontSize : "15";
+  const fontSize = Math.min(Math.max(parseInt(fontSizeParam) || 15, 12), 24);
+
+  const maxParam = typeof resolvedSearchParams.max === "string" ? resolvedSearchParams.max : "20";
+  const maxTestimonials = Math.min(Math.max(parseInt(maxParam) || 20, 1), 50);
+
+  const hideBranding = resolvedSearchParams.hideBranding === "true" || resolvedSearchParams.hideBranding === "1";
+
+  // Fetch testimonials
+  const { data: testimonials } = await supabase
+    .from("testimonials")
+    .select("*")
+    .eq("space_id", space.id)
+    .eq("status", "approved")
+    .order("created_at", { ascending: false })
+    .limit(maxTestimonials);
+
+  const sorted = [...(testimonials || [])];
+  if (sortParam === "rating") sorted.sort((a: Testimonial, b: Testimonial) => b.rating - a.rating);
+  else if (sortParam === "oldest") sorted.sort((a: Testimonial, b: Testimonial) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
 
   const theme = {
     bodyBg: isDark ? "#1f2937" : "transparent",
@@ -126,7 +137,7 @@ export default async function EmbedPage({
                     margin: "0 0 16px",
                     lineHeight: 1.6,
                     color: theme.textPrimary,
-                    fontSize: "15px",
+                    fontSize: `${fontSize}px`,
                   }}
                 >
                   &ldquo;{t.content}&rdquo;
@@ -166,7 +177,7 @@ export default async function EmbedPage({
                           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M20 6L9 17l-5-5"/>
                           </svg>
-                          Vérifié
+                          Verified
                         </span>
                       )}
                     </div>
@@ -205,36 +216,38 @@ export default async function EmbedPage({
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
               </svg>
               <h3 style={{ margin: "0 0 8px 0", fontSize: "18px", fontWeight: 600, color: theme.textPrimary }}>
-                Aucun témoignage pour le moment
+                No testimonials yet
               </h3>
               <p style={{ margin: 0, fontSize: "14px", color: theme.textMuted }}>
-                Sois le premier à partager ton expérience !
+                Be the first to share your experience!
               </p>
             </div>
           )}
         </div>
-        <div
-          style={{
-            textAlign: "center",
-            padding: "12px",
-            fontSize: "11px",
-            color: theme.textMuted,
-          }}
-        >
-          Powered by{" "}
-          <a
-            href="https://testiwall-kappa.vercel.app"
-            target="_blank"
-            rel="noopener noreferrer"
+        {!hideBranding && (
+          <div
             style={{
-              fontWeight: 600,
-              color: `#${accentColor}`,
-              textDecoration: "none"
+              textAlign: "center",
+              padding: "12px",
+              fontSize: "11px",
+              color: theme.textMuted,
             }}
           >
-            TestiWall
-          </a>
-        </div>
+            Powered by{" "}
+            <a
+              href="https://testiwall-kappa.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontWeight: 600,
+                color: `#${accentColor}`,
+                textDecoration: "none"
+              }}
+            >
+              TestiWall
+            </a>
+          </div>
+        )}
       </body>
     </html>
   );

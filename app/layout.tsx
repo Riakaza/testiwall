@@ -1,32 +1,33 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { I18nProvider } from "@/lib/i18n-context";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 const siteName = "TestiWall";
-const description = "Collecte et affiche les témoignages de tes clients sur ton site en 2 minutes. 100% gratuit, sans coder.";
+const description = "Collect and display client testimonials on your website in 2 minutes. 100% free, no coding required.";
 const url = "https://testiwall-kappa.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(url),
   title: {
-    default: "TestiWall — Collecte et affiche les témoignages de tes clients",
+    default: "TestiWall — Collect and display client testimonials",
     template: `%s | ${siteName}`,
   },
   description,
   openGraph: {
-    title: "TestiWall — Collecte et affiche les témoignages de tes clients",
+    title: "TestiWall — Collect and display client testimonials",
     description,
     url,
     siteName,
-    locale: "fr_FR",
+    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "TestiWall — Collecte et affiche les témoignages de tes clients",
+    title: "TestiWall — Collect and display client testimonials",
     description,
   },
 };
@@ -41,8 +42,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${geistSans.variable} ${geistMono.variable} antialiased`} style={{ colorScheme: "only light" }}>
-      <body>{children}</body>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`} style={{ colorScheme: "only light" }} suppressHydrationWarning>
+      <body suppressHydrationWarning>
+        <I18nProvider>{children}</I18nProvider>
+      </body>
     </html>
   );
 }

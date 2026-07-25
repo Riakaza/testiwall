@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase-client";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useTranslation } from "@/lib/i18n-context";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -12,7 +13,8 @@ export default function SignupPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
+  const [emailSent, setEmailSent] = useState(false);
+  const { t } = useTranslation();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -25,6 +27,7 @@ export default function SignupPage() {
       password,
       options: {
         data: { full_name: fullName },
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
     });
 
@@ -32,25 +35,60 @@ export default function SignupPage() {
       setError(error.message);
       setLoading(false);
     } else {
-      router.push("/dashboard");
+      setEmailSent(true);
+      setLoading(false);
     }
+  }
+
+  if (emailSent) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-gray-50 to-indigo-50/30">
+        <div className="absolute top-4 right-4">
+          <LanguageSwitcher />
+        </div>
+        <div className="w-full max-w-sm animate-scale-in text-center">
+          <div className="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-8">
+            <div className="w-16 h-16 mx-auto mb-4 bg-green-50 rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h2 className="text-xl font-bold text-gray-900 mb-2">
+              {t("signup.checkEmail")}
+            </h2>
+            <p className="text-gray-500 text-sm mb-6">
+              {t("signup.checkEmailDesc")}
+            </p>
+            <Link
+              href="/login"
+              className="inline-block w-full py-2.5 bg-accent text-white rounded-lg font-medium hover:bg-accent-dark transition-all shadow-md shadow-accent/20"
+            >
+              {t("signup.goToLogin")}
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-gray-50 to-indigo-50/30">
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <div className="w-full max-w-sm animate-scale-in">
         <div className="text-center mb-8">
           <Link href="/" className="text-2xl font-bold tracking-tight inline-block">
             <span className="text-accent">Testi</span>Wall
           </Link>
-          <p className="mt-2 text-gray-500">Crée ton compte gratuitement</p>
+          <p className="mt-2 text-gray-500">{t("signup.title")}</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Nom complet
+                {t("signup.fullName")}
               </label>
               <input
                 type="text"
@@ -58,12 +96,12 @@ export default function SignupPage() {
                 onChange={(e) => setFullName(e.target.value)}
                 required
                 className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm transition-all"
-                placeholder="Jean Dupont"
+                placeholder={t("signup.fullNamePlaceholder")}
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Email
+                {t("signup.email")}
               </label>
               <input
                 type="email"
@@ -71,12 +109,12 @@ export default function SignupPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm transition-all"
-                placeholder="ton@email.com"
+                placeholder={t("signup.emailPlaceholder")}
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Mot de passe
+                {t("signup.password")}
               </label>
               <div className="relative">
                 <input
@@ -86,7 +124,7 @@ export default function SignupPage() {
                   required
                   minLength={6}
                   className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm transition-all pr-10"
-                  placeholder="6 caractères minimum"
+                  placeholder={t("signup.passwordPlaceholder")}
                 />
                 <button
                   type="button"
@@ -113,15 +151,15 @@ export default function SignupPage() {
               disabled={loading}
               className="w-full py-2.5 bg-accent text-white rounded-lg font-medium hover:bg-accent-dark disabled:opacity-50 transition-all shadow-md shadow-accent/20"
             >
-              {loading ? "Création..." : "Créer mon compte"}
+              {loading ? t("signup.loading") : t("signup.submit")}
             </button>
           </form>
         </div>
 
         <p className="mt-6 text-center text-sm text-gray-500">
-          Déjà un compte ?{" "}
+          {t("signup.hasAccount")}{" "}
           <Link href="/login" className="text-accent font-medium hover:underline">
-            Se connecter
+            {t("signup.signIn")}
           </Link>
         </p>
       </div>
