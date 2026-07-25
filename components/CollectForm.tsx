@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useTranslation } from "@/lib/i18n-context";
 
 export function CollectForm({
   spaceId,
@@ -20,6 +21,7 @@ export function CollectForm({
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { t } = useTranslation();
 
   // Video states
   const [stream, setStream] = useState<MediaStream | null>(null);
@@ -35,7 +37,7 @@ export function CollectForm({
 
   useEffect(() => {
     return () => {
-      stream?.getTracks().forEach((t) => t.stop());
+      stream?.getTracks().forEach((tr) => tr.stop());
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, [stream]);
@@ -61,13 +63,13 @@ export function CollectForm({
     recorder.onstop = () => {
       const blob = new Blob(chunksRef.current, { type: "video/webm" });
       setVideoBlob(blob);
-      stream.getTracks().forEach((t) => t.stop());
+      stream.getTracks().forEach((tr) => tr.stop());
     };
     recorder.start();
     mediaRecorderRef.current = recorder;
     setRecording(true);
     setTimer(0);
-    timerRef.current = setInterval(() => setTimer((t) => t + 1), 1000);
+    timerRef.current = setInterval(() => setTimer((prev) => prev + 1), 1000);
   }
 
   function stopRecording() {
@@ -78,7 +80,7 @@ export function CollectForm({
 
   function confirmContent() {
     if (mode === "video") {
-      setContent("[VIDEO] Témoignage vidéo enregistré");
+      setContent("[VIDEO]");
     }
     setStep(2);
   }
@@ -120,36 +122,35 @@ export function CollectForm({
             <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
           </svg>
         </div>
-        <p className="text-lg font-semibold text-gray-900">Vérifie ta boîte mail !</p>
+        <p className="text-lg font-semibold text-gray-900">{t("collect.checkEmail")}</p>
         <p className="text-sm text-gray-500 mt-2">
-          Un email de confirmation a été envoyé à <strong>{email}</strong>.<br />
-          Clique sur le lien pour valider ton témoignage.
+          {t("collect.checkEmailDesc")} <strong>{email}</strong>
         </p>
         <p className="text-xs text-gray-400 mt-3">
-          Tu ne le vois pas ? Vérifie ton dossier spam ou indésirables.
+          {t("collect.checkSpam")}
         </p>
       </div>
     );
   }
 
-  // ÉTAPE 1 — Choix du mode + contenu
+  // Step 1 — Mode choice + content
   if (step === 1) {
     return (
       <div className="space-y-5">
         {!mode && (
           <div className="space-y-3">
-            <p className="text-sm text-gray-500 text-center mb-4">Comment veux-tu partager ton expérience ?</p>
+            <p className="text-sm text-gray-500 text-center mb-4">{t("collect.howToShare")}</p>
             <button
               onClick={startCamera}
               className="w-full py-5 rounded-xl border-2 border-gray-200 hover:border-accent/40 hover:bg-accent/5 font-semibold text-base transition-all flex items-center justify-center gap-3"
             >
-              <span className="text-2xl">🎥</span> Enregistrer une vidéo
+              <span className="text-2xl">🎥</span> {t("collect.recordVideo")}
             </button>
             <button
               onClick={() => setMode("text")}
               className="w-full py-5 rounded-xl border-2 border-gray-200 hover:border-accent/40 hover:bg-accent/5 font-semibold text-base transition-all flex items-center justify-center gap-3"
             >
-              <span className="text-2xl">✍️</span> Écrire un texte
+              <span className="text-2xl">✍️</span> {t("collect.writeText")}
             </button>
           </div>
         )}
@@ -158,13 +159,13 @@ export function CollectForm({
           <div className="space-y-4 animate-fade-in">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Ton témoignage <span className="text-red-400">*</span>
+                {t("collect.testimonial")} <span className="text-red-400">*</span>
               </label>
               <textarea
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 rows={4}
-                placeholder="Raconte ton expérience..."
+                placeholder={t("collect.testimonialPlaceholder")}
                 className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm transition-all resize-none"
               />
             </div>
@@ -173,14 +174,14 @@ export function CollectForm({
                 onClick={() => setMode(null)}
                 className="px-4 py-2.5 border border-gray-200 text-gray-600 rounded-xl text-sm font-medium hover:bg-gray-50 transition-all"
               >
-                ← Retour
+                &larr; {t("collect.back")}
               </button>
               <button
                 onClick={confirmContent}
                 disabled={!content.trim()}
                 className="flex-1 py-2.5 bg-accent text-white rounded-xl font-medium hover:bg-accent-dark disabled:opacity-50 transition-all shadow-md shadow-accent/20 text-sm"
               >
-                C&apos;est bon !
+                {t("collect.looksGood")}
               </button>
             </div>
           </div>
@@ -205,7 +206,7 @@ export function CollectForm({
                   onClick={stopRecording}
                   className="px-6 py-2.5 bg-red-500 text-white rounded-xl font-medium hover:bg-red-600 transition-colors"
                 >
-                  Arrêter
+                  {t("collect.stop")}
                 </button>
               </div>
             ) : (
@@ -214,14 +215,14 @@ export function CollectForm({
                 className="w-full py-3 bg-red-500 text-white rounded-xl font-medium hover:bg-red-600 transition-all shadow-md text-sm flex items-center justify-center gap-2"
               >
                 <span className="w-3 h-3 rounded-full bg-white" />
-                Démarrer l&apos;enregistrement
+                {t("collect.startRecording")}
               </button>
             )}
             <button
-              onClick={() => { stream?.getTracks().forEach((t) => t.stop()); setMode(null); }}
+              onClick={() => { stream?.getTracks().forEach((tr) => tr.stop()); setMode(null); }}
               className="w-full py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors"
             >
-              ← Revenir au choix
+              &larr; {t("collect.backToChoice")}
             </button>
           </div>
         )}
@@ -238,19 +239,19 @@ export function CollectForm({
                 onClick={() => { setVideoBlob(null); startCamera(); }}
                 className="px-4 py-2.5 border border-gray-200 text-gray-600 rounded-xl text-sm font-medium hover:bg-gray-50 transition-all"
               >
-                Recommencer
+                {t("collect.retake")}
               </button>
               <button
                 onClick={confirmContent}
                 className="flex-1 py-2.5 bg-accent text-white rounded-xl font-medium hover:bg-accent-dark transition-all shadow-md shadow-accent/20 text-sm"
               >
-                C&apos;est bon !
+                {t("collect.looksGood")}
               </button>
             </div>
           </div>
         )}
 
-        {/* Modale erreur caméra */}
+        {/* Camera error modal */}
         {showCameraError && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowCameraError(false)} />
@@ -261,16 +262,16 @@ export function CollectForm({
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900">Caméra indisponible</h3>
+                <h3 className="text-lg font-bold text-gray-900">{t("collect.cameraUnavailable")}</h3>
               </div>
               <p className="text-sm text-gray-600 mb-6 text-center leading-relaxed">
-                Clique sur le cadenas 🔒 dans ta barre d&apos;adresse → Autorisations du site → Active la caméra, puis recharge la page.
+                {t("collect.cameraInstructions")}
               </p>
               <button
                 onClick={() => { setShowCameraError(false); setMode("text"); }}
                 className="w-full py-3 bg-accent text-white rounded-xl font-medium hover:bg-accent-dark transition-all shadow-md shadow-accent/20 text-sm"
               >
-                Passer au format texte
+                {t("collect.switchToText")}
               </button>
             </div>
           </div>
@@ -279,14 +280,14 @@ export function CollectForm({
     );
   }
 
-  // ÉTAPE 2 — Identification
+  // Step 2 — Identification
   return (
     <form onSubmit={handleSubmit} className="space-y-5 animate-fade-in">
-      <p className="text-sm text-gray-500 text-center">Super ! Plus qu&apos;à remplir tes infos :</p>
+      <p className="text-sm text-gray-500 text-center">{t("collect.almostDone")}</p>
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1.5">
-          Ton nom <span className="text-red-400">*</span>
+          {t("collect.name")} <span className="text-red-400">*</span>
         </label>
         <input
           type="text"
@@ -294,13 +295,13 @@ export function CollectForm({
           onChange={(e) => setName(e.target.value)}
           required
           className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm transition-all"
-          placeholder="Jean Dupont"
+          placeholder="John Doe"
         />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1.5">
-          Email <span className="text-red-400">*</span>
+          {t("collect.email")} <span className="text-red-400">*</span>
         </label>
         <input
           type="email"
@@ -308,19 +309,19 @@ export function CollectForm({
           onChange={(e) => setEmail(e.target.value)}
           required
           className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm transition-all"
-          placeholder="jean@email.com"
+          placeholder="you@email.com"
         />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1.5">
-          Poste / Entreprise
+          {t("collect.role")}
         </label>
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="CEO chez Acme"
+          placeholder="CEO at Acme"
           className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm transition-all"
         />
       </div>
@@ -352,7 +353,7 @@ export function CollectForm({
           className="mt-0.5 accent-accent"
         />
         <label htmlFor="consent" className="text-xs text-gray-500">
-          J&apos;autorise l&apos;utilisation publique de ce témoignage à des fins marketing.
+          {t("collect.consentLabel")}
         </label>
       </div>
 
@@ -361,7 +362,7 @@ export function CollectForm({
         disabled={loading || !consent}
         className="w-full py-3 bg-accent text-white rounded-xl font-medium hover:bg-accent-dark disabled:opacity-50 transition-all shadow-md shadow-accent/20 text-sm"
       >
-        {loading ? "Traitement en cours..." : "Envoyer mon témoignage"}
+        {loading ? t("collect.loading") : t("collect.submit")}
       </button>
 
       <button
@@ -369,7 +370,7 @@ export function CollectForm({
         onClick={() => setStep(1)}
         className="w-full py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors"
       >
-        ← Modifier mon témoignage
+        &larr; {t("collect.editTestimonial")}
       </button>
     </form>
   );

@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase-client";
+import { useTranslation } from "@/lib/i18n-context";
 
 export function ExportAllData() {
   const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslation();
 
   const exportData = async () => {
     setIsLoading(true);
@@ -19,13 +21,13 @@ export function ExportAllData() {
         .eq("user_id", user.id);
 
       if (!spaces || spaces.length === 0) {
-        alert("Aucune donnée à exporter.");
+        alert(t("dashboard.noDataToExport"));
         setIsLoading(false);
         return;
       }
 
       const allRows: string[] = [];
-      const headers = ["Espace", "Nom", "Email", "Titre", "Contenu", "Note", "Statut", "Vérifié", "Date"];
+      const headers = ["Space", "Name", "Email", "Title", "Content", "Rating", "Status", "Verified", "Date"];
       allRows.push(headers.join(","));
 
       for (const space of spaces) {
@@ -35,17 +37,17 @@ export function ExportAllData() {
           .eq("space_id", space.id);
 
         if (testimonials) {
-          for (const t of testimonials) {
+          for (const item of testimonials) {
             allRows.push([
               `"${space.name.replace(/"/g, '""')}"`,
-              `"${t.author_name.replace(/"/g, '""')}"`,
-              `"${t.author_email.replace(/"/g, '""')}"`,
-              `"${(t.author_title || "").replace(/"/g, '""')}"`,
-              `"${t.content.replace(/"/g, '""')}"`,
-              t.rating,
-              t.status,
-              t.email_verified ? "Oui" : "Non",
-              new Date(t.created_at).toLocaleDateString("fr-FR"),
+              `"${item.author_name.replace(/"/g, '""')}"`,
+              `"${item.author_email.replace(/"/g, '""')}"`,
+              `"${(item.author_title || "").replace(/"/g, '""')}"`,
+              `"${item.content.replace(/"/g, '""')}"`,
+              item.rating,
+              item.status,
+              item.email_verified ? "Yes" : "No",
+              new Date(item.created_at).toLocaleDateString("en-US"),
             ].join(","));
           }
         }
@@ -55,13 +57,13 @@ export function ExportAllData() {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "testiwall-mes-donnees.csv");
+      link.setAttribute("download", "testiwall-data.csv");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
-    } catch (e) {
-      alert("Erreur lors de l'exportation.");
+    } catch {
+      alert(t("general.error"));
     } finally {
       setIsLoading(false);
     }
@@ -76,7 +78,7 @@ export function ExportAllData() {
       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
       </svg>
-      {isLoading ? "Exportation..." : "Exporter toutes mes données"}
+      {isLoading ? t("dashboard.exporting") : t("dashboard.exportData")}
     </button>
   );
 }
