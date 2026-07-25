@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/lib/i18n-context";
+import { FloatingLanguageSwitcher } from "@/components/FloatingLanguageSwitcher";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -44,7 +45,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`} style={{ colorScheme: "only light" }} suppressHydrationWarning>
       <body suppressHydrationWarning>
-        <I18nProvider>{children}</I18nProvider>
+        <I18nProvider>
+          {children}
+          <FloatingLanguageSwitcher />
+        </I18nProvider>
       </body>
     </html>
   );
