@@ -1,6 +1,13 @@
-import { createClient } from "@/lib/supabase-server";
+import { createClient } from "@supabase/supabase-js";
 import { notFound } from "next/navigation";
 import type { Testimonial } from "@/lib/types";
+
+function getPublicSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+}
 
 export default async function WallOfLovePage({
   params,
@@ -8,7 +15,7 @@ export default async function WallOfLovePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const supabase = await createClient();
+  const supabase = getPublicSupabase();
 
   const { data: space } = await supabase
     .from("spaces")

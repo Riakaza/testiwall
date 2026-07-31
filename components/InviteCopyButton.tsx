@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslation } from "@/lib/i18n-context";
 
 export function InviteCopyButton({
   collectUrl,
@@ -10,9 +11,12 @@ export function InviteCopyButton({
   spaceName: string;
 }) {
   const [copied, setCopied] = useState(false);
+  const { t } = useTranslation();
 
   const handleCopy = async () => {
-    const text = `Bonjour ! J'aimerais beaucoup avoir ton retour sur ${spaceName}. Ça ne prend que 30 secondes : ${collectUrl} Merci !`;
+    const text = t("invite.message")
+      .replace("{spaceName}", spaceName)
+      .replace("{collectUrl}", collectUrl);
     await navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -28,14 +32,14 @@ export function InviteCopyButton({
           <svg className="h-4 w-4 text-emerald-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
           </svg>
-          <span className="text-emerald-600 font-semibold">Copié !</span>
+          <span className="text-emerald-600 font-semibold">{t("invite.copied")}</span>
         </>
       ) : (
         <>
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
           </svg>
-          <span>Copier l&apos;invitation</span>
+          <span>{t("invite.copyInvite")}</span>
         </>
       )}
     </button>
