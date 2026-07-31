@@ -30,6 +30,11 @@ export function CreateSpaceForm() {
       return;
     }
 
+    await supabase.from("profiles").upsert(
+      { id: user.id, full_name: user.user_metadata?.full_name || null },
+      { onConflict: "id" }
+    );
+
     const slug = name
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")

@@ -17,6 +17,8 @@ export function CollectForm({
   const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
   const [website, setWebsite] = useState("");
+  const [rating, setRating] = useState(5);
+  const [hoverRating, setHoverRating] = useState(0);
   const [consent, setConsent] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -99,7 +101,7 @@ export function CollectForm({
         author_email: email.trim(),
         author_title: title.trim() || null,
         content: content.trim(),
-        rating: 5,
+        rating,
         website,
         consent,
       }),
@@ -157,6 +159,27 @@ export function CollectForm({
 
         {mode === "text" && (
           <div className="space-y-4 animate-fade-in">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                {t("collect.rating")} <span className="text-red-400">*</span>
+              </label>
+              <div className="flex gap-1">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    type="button"
+                    onClick={() => setRating(star)}
+                    onMouseEnter={() => setHoverRating(star)}
+                    onMouseLeave={() => setHoverRating(0)}
+                    className={`text-2xl cursor-pointer transition-colors ${
+                      star <= (hoverRating || rating) ? "text-amber-400" : "text-gray-300"
+                    }`}
+                  >
+                    ★
+                  </button>
+                ))}
+              </div>
+            </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
                 {t("collect.testimonial")} <span className="text-red-400">*</span>
@@ -234,6 +257,27 @@ export function CollectForm({
               controls
               className="w-full rounded-xl"
             />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                {t("collect.rating")} <span className="text-red-400">*</span>
+              </label>
+              <div className="flex gap-1">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    type="button"
+                    onClick={() => setRating(star)}
+                    onMouseEnter={() => setHoverRating(star)}
+                    onMouseLeave={() => setHoverRating(0)}
+                    className={`text-2xl cursor-pointer transition-colors ${
+                      star <= (hoverRating || rating) ? "text-amber-400" : "text-gray-300"
+                    }`}
+                  >
+                    ★
+                  </button>
+                ))}
+              </div>
+            </div>
             <div className="flex gap-2">
               <button
                 onClick={() => { setVideoBlob(null); startCamera(); }}
