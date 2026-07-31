@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@/lib/supabase-client";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "@/lib/i18n-context";
 
@@ -19,37 +18,16 @@ export function CreateSpaceForm() {
     setLoading(true);
     setError("");
 
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      setError("Not authenticated");
-      setLoading(false);
-      return;
-    }
-
-    await supabase.from("profiles").upsert(
-      { id: user.id, full_name: user.user_metadata?.full_name || null },
-      { onConflict: "id" }
-    );
-
-    const slug = name
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "");
-
-    const { error: insertError } = await supabase.from("spaces").insert({
-      user_id: user.id,
-      name: name.trim(),
-      slug: `${slug}-${Date.now().toString(36)}`,
-      question: "What do you love about working with us?",
-      thank_you_msg: "Thank you for your testimonial!",
+    const res = await fetch("/api/spaces/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: name.trim() }),
     });
 
-    if (insertError) {
-      setError(insertError.message);
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.error);
       setLoading(false);
     } else {
       setName("");
