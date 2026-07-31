@@ -176,6 +176,7 @@ export const translations = {
       copy: "Copy",
       copied: "Copied!",
       open: "Open",
+      back: "Back",
     },
     landing: {
       nav: { login: "Login", signup: "Start free" },
@@ -415,6 +416,7 @@ export const translations = {
       copy: "Copier",
       copied: "Copié !",
       open: "Ouvrir",
+      back: "Retour",
     },
     landing: {
       nav: { login: "Connexion", signup: "Commencer gratuitement" },

@@ -38,6 +38,9 @@ export function SpaceDetailContent({
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50/20">
       <nav className="bg-white/80 backdrop-blur-sm border-b border-gray-200/60 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
         <div className="flex items-center gap-3">
+          <Link href="/dashboard" className="text-gray-400 hover:text-gray-700 transition-colors">
+            <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+          </Link>
           <Link href="/dashboard" className="text-xl font-bold tracking-tight">
             <span className="text-accent">Testi</span>Wall
           </Link>
