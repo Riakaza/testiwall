@@ -132,11 +132,6 @@ export function SpaceDetailContent({
               </div>
             </div>
 
-            <div className="bg-accent/5 border border-accent/20 rounded-xl p-5">
-              <p className="text-sm text-accent-dark">
-                <strong>{t("spaceDetail.tip")}</strong> {t("spaceDetail.tipContent")}
-              </p>
-            </div>
 
             <TestimonialManager
               testimonials={testimonials}
