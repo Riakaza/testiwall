@@ -27,6 +27,7 @@ export function EmbedInstructions({ embedUrl, slug }: { embedUrl: string; slug: 
 
   const colors = [
     { hex: "6366f1", label: "Indigo" },
+    { hex: "3b82f6", label: "Blue" },
     { hex: "e11d48", label: "Rose" },
     { hex: "10b981", label: "Emerald" },
     { hex: "f59e0b", label: "Amber" },
