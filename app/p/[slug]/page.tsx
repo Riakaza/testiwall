@@ -33,6 +33,11 @@ export default async function WallOfLovePage({
     .order("created_at", { ascending: false });
 
   const typedTestimonials = (testimonials as Testimonial[]) || [];
+  const totalCount = typedTestimonials.length;
+  const avgRating =
+    totalCount > 0
+      ? typedTestimonials.reduce((sum, t) => sum + (t.rating || 0), 0) / totalCount
+      : 0;
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 via-white to-indigo-50/20">
@@ -45,8 +50,20 @@ export default async function WallOfLovePage({
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900 mb-4">
             {space.name}
           </h1>
-          <p className="text-gray-500 text-lg">
-            {typedTestimonials.length} témoignage{typedTestimonials.length > 1 ? "s" : ""} partagé{typedTestimonials.length > 1 ? "s" : ""}
+          {totalCount > 0 && (
+            <div className="flex items-center justify-center gap-2 mt-3">
+              <span className="flex gap-0.5">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <span key={i} className={`text-xl ${i < Math.round(avgRating) ? "text-amber-400" : "text-gray-200"}`}>
+                    ★
+                  </span>
+                ))}
+              </span>
+              <span className="font-bold text-gray-900">{avgRating.toFixed(1)}/5</span>
+            </div>
+          )}
+          <p className="text-gray-500 text-lg mt-2">
+            {totalCount} témoignage{totalCount > 1 ? "s" : ""} vérifié{totalCount > 1 ? "s" : ""} partagé{totalCount > 1 ? "s" : ""}
           </p>
         </header>
 

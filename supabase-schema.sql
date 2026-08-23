@@ -121,3 +121,29 @@ create index idx_spaces_slug on public.spaces(slug);
 create index idx_testimonials_space_id on public.testimonials(space_id);
 create index idx_testimonials_status on public.testimonials(status);
 create index idx_testimonials_ip_created on public.testimonials(submitted_from_ip, created_at);
+
+-- ============================================================
+-- Migration : plans freemium (à exécuter dans le SQL Editor Supabase)
+-- ============================================================
+
+-- Colonne plan sur les profils ('free' | 'pro')
+alter table public.profiles add column if not exists plan text not null default 'free'
+  check (plan in ('free', 'pro'));
+
+-- Empêche un utilisateur de s'auto-promouvoir en 'pro' via l'API
+-- (le passage en pro se fera côté serveur/billing avec la clé service_role,
+--  qui n'a pas de auth.uid() et n'est donc pas bloquée)
+create or replace function public.prevent_plan_self_update()
+returns trigger as $$
+begin
+  if new.plan is distinct from old.plan and auth.uid() is not null then
+    raise exception 'Le changement de plan passe par la facturation.';
+  end if;
+  return new;
+end;
+$$ language plpgsql security definer;
+
+drop trigger if exists trg_prevent_plan_self_update on public.profiles;
+create trigger trg_prevent_plan_self_update
+  before update on public.profiles
+  for each row execute procedure public.prevent_plan_self_update();

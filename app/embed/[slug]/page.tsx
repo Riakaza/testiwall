@@ -59,7 +59,38 @@ export default async function EmbedPage({
   const maxParam = typeof resolvedSearchParams.max === "string" ? resolvedSearchParams.max : "20";
   const maxTestimonials = Math.min(Math.max(parseInt(maxParam) || 20, 1), 50);
 
-  const hideBranding = resolvedSearchParams.hideBranding === "true" || resolvedSearchParams.hideBranding === "1";
+  const hideBrandingParam =
+    resolvedSearchParams.hideBranding === "true" || resolvedSearchParams.hideBranding === "1";
+
+  // hideBranding est une fonctionnalité Pro : honorée uniquement si le
+  // propriétaire de l'espace est sur le plan 'pro'
+  let ownerPlan: string | null = null;
+  if (hideBrandingParam) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("plan")
+      .eq("id", space.user_id)
+      .single();
+    ownerPlan = profile?.plan ?? null;
+  }
+  const canHideBranding = ownerPlan === "pro";
+
+  // Résumé agrégé (note moyenne + nombre d'avis) via ?showSummary=1
+  const showSummary =
+    resolvedSearchParams.showSummary === "1" || resolvedSearchParams.showSummary === "true";
+  let avgRating = 0;
+  let totalCount = 0;
+  if (showSummary) {
+    const { data: ratings } = await supabase
+      .from("testimonials")
+      .select("rating")
+      .eq("space_id", space.id)
+      .eq("status", "approved");
+    if (ratings && ratings.length > 0) {
+      totalCount = ratings.length;
+      avgRating = ratings.reduce((sum, r) => sum + (r.rating || 0), 0) / totalCount;
+    }
+  }
 
   // Fetch testimonials
   const { data: testimonials } = await supabase
@@ -92,6 +123,32 @@ export default async function EmbedPage({
   return (
     <html style={{ background: theme.bodyBg }}>
       <body style={{ margin: 0, fontFamily: "'Inter', system-ui, -apple-system, sans-serif", background: "transparent" }}>
+        {showSummary && totalCount > 0 && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "10px",
+              padding: "16px 16px 0",
+              flexWrap: "wrap",
+            }}
+          >
+            <span style={{ display: "flex", gap: "2px", fontSize: "20px" }}>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <span key={i} style={{ color: i < Math.round(avgRating) ? "#f59e0b" : isDark ? "#4b5563" : "#e5e7eb" }}>
+                  ★
+                </span>
+              ))}
+            </span>
+            <span style={{ fontSize: "15px", fontWeight: 700, color: theme.textPrimary }}>
+              {avgRating.toFixed(1)}/5
+            </span>
+            <span style={{ fontSize: "13px", color: theme.textSecondary }}>
+              based on {totalCount} verified testimonial{totalCount > 1 ? "s" : ""}
+            </span>
+          </div>
+        )}
         {isCarousel && <style dangerouslySetInnerHTML={{ __html: `[data-carousel]::-webkit-scrollbar { display: none; }` }} />}
         <div
           data-carousel={isCarousel ? "" : undefined}
@@ -231,7 +288,7 @@ export default async function EmbedPage({
             </div>
           )}
         </div>
-        {!hideBranding && (
+        {!canHideBranding && (
           <div
             style={{
               textAlign: "center",
