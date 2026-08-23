@@ -49,6 +49,10 @@ export const translations = {
       nameRequired: "The name is required.",
       error: "An error occurred. Please try again.",
     },
+    planLimit: {
+      title: "You're approaching the Free plan limit",
+      desc: "Free allows up to 15 verified testimonials per space. Upgrade to Pro for unlimited testimonials and to remove TestiWall branding from your widgets.",
+    },
     dashboard: {
       mySpaces: "My spaces",
       createSpace: "Create a space",
@@ -308,6 +312,10 @@ export const translations = {
       saved: "Modifications enregistrées !",
       nameRequired: "Le nom est requis.",
       error: "Une erreur est survenue. Réessaie.",
+    },
+    planLimit: {
+      title: "Tu approches de la limite du plan gratuit",
+      desc: "Le plan gratuit permet jusqu'à 15 témoignages vérifiés par espace. Passe en Pro pour des témoignages illimités et masquer la marque TestiWall de tes widgets.",
     },
     dashboard: {
       mySpaces: "Mes espaces",

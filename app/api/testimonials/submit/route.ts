@@ -23,6 +23,8 @@ function getTransporter() {
   });
 }
 
+const FREE_PLAN_TESTIMONIAL_LIMIT = 15;
+
 export async function POST(request: NextRequest) {
   const body = await request.json();
 
@@ -80,6 +82,36 @@ export async function POST(request: NextRequest) {
       { error: "Trop de soumissions. Réessaie dans une heure." },
       { status: 429 }
     );
+  }
+
+  // Free plan: limite de témoignages vérifiés par espace
+  const { data: spaceRow } = await supabase
+    .from("spaces")
+    .select("user_id")
+    .eq("id", space_id)
+    .single();
+
+  if (spaceRow) {
+    const { data: ownerProfile } = await supabase
+      .from("profiles")
+      .select("plan")
+      .eq("id", spaceRow.user_id)
+      .single();
+
+    if ((ownerProfile?.plan ?? "free") === "free") {
+      const { count: verifiedCount } = await supabase
+        .from("testimonials")
+        .select("*", { count: "exact", head: true })
+        .eq("space_id", space_id)
+        .neq("status", "unverified");
+
+      if (verifiedCount !== null && verifiedCount >= FREE_PLAN_TESTIMONIAL_LIMIT) {
+        return NextResponse.json(
+          { error: "Ce formulaire n'accepte plus de nouveaux témoignages pour le moment." },
+          { status: 403 }
+        );
+      }
+    }
   }
 
   // Check if this email already submitted for this space

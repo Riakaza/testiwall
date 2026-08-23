@@ -26,6 +26,7 @@ interface SpaceDetailContentProps {
   collectUrl: string;
   embedUrl: string;
   baseUrl: string;
+  ownerPlan: string;
 }
 
 export function SpaceDetailContent({
@@ -34,12 +35,16 @@ export function SpaceDetailContent({
   collectUrl,
   embedUrl,
   baseUrl,
+  ownerPlan,
 }: SpaceDetailContentProps) {
   const { t } = useTranslation();
 
   const testimonialCount = testimonials.length;
   const approvedCount = testimonials.filter((t) => t.status === "approved").length;
   const pendingCount = testimonials.filter((t) => t.status === "pending").length;
+  const collectedCount = testimonials.filter((t) => t.status !== "unverified").length;
+  const showPlanLimitBanner =
+    ownerPlan !== "pro" && collectedCount >= 12 && testimonialCount > 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50/20">
@@ -60,7 +65,19 @@ export function SpaceDetailContent({
         </div>
       </nav>
 
-      <main className="max-w-4xl mx-auto px-6 py-10">
+        {showPlanLimitBanner && (
+          <div className="bg-accent/5 border border-accent/20 rounded-2xl p-5 mb-8 flex flex-col sm:flex-row sm:items-center gap-4">
+            <span className="flex-shrink-0 text-[10px] font-bold uppercase tracking-wider bg-accent text-white px-2.5 py-1 rounded-full w-fit">
+              Pro
+            </span>
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-gray-900">{t("planLimit.title")}</p>
+              <p className="text-sm text-gray-500 mt-0.5">{t("planLimit.desc")}</p>
+            </div>
+          </div>
+        )}
+
+        <main className="max-w-4xl mx-auto px-6 py-10">
         <div className="grid grid-cols-3 gap-4 mb-10">
           <div className="bg-white rounded-xl border border-gray-200 p-5 text-center shadow-sm">
             <p className="text-3xl font-bold tracking-tight">{testimonialCount}</p>

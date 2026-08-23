@@ -26,6 +26,12 @@ export default async function SpaceDetailPage({
 
   if (!space) notFound();
 
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("plan")
+    .eq("id", user.id)
+    .single();
+
   const { data: testimonials } = await supabase
     .from("testimonials")
     .select("*")
@@ -52,6 +58,7 @@ export default async function SpaceDetailPage({
       collectUrl={collectUrl}
       embedUrl={embedUrl}
       baseUrl={baseUrl}
+      ownerPlan={profile?.plan ?? "free"}
     />
   );
 }
