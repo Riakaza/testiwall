@@ -312,6 +312,11 @@ export default async function EmbedPage({
             </a>
           </div>
         )}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){function p(){parent.postMessage({type:"testiwall-height",height:document.documentElement.scrollHeight},"*")}window.addEventListener("load",p);try{new ResizeObserver(p).observe(document.body)}catch(e){}})();`,
+          }}
+        />
       </body>
     </html>
   );

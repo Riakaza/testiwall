@@ -13,6 +13,7 @@ export function EmbedInstructions({ embedUrl, slug }: { embedUrl: string; slug: 
   const [fontSize, setFontSize] = useState("15");
   const [maxTestimonials, setMaxTestimonials] = useState("20");
   const [hideBranding, setHideBranding] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
   const { t } = useTranslation();
 
   const params: string[] = [];
@@ -21,9 +22,17 @@ export function EmbedInstructions({ embedUrl, slug }: { embedUrl: string; slug: 
   if (fontSize !== "15") params.push(`fontSize=${fontSize}`);
   if (maxTestimonials !== "20") params.push(`max=${maxTestimonials}`);
   if (hideBranding) params.push("hideBranding=true");
+  if (showSummary) params.push("showSummary=1");
   const customizedEmbedUrl = params.length > 0 ? `${embedUrl}?${params.join("&")}` : embedUrl;
 
-  const iframeCode = `<iframe src="${customizedEmbedUrl}" width="100%" height="500" frameborder="0" style="border:none;border-radius:12px;overflow:hidden;"></iframe>`;
+  const iframeCode = `<iframe id="testiwall-widget" src="${customizedEmbedUrl}" width="100%" height="500" frameborder="0" style="border:none;border-radius:12px;overflow:hidden;"></iframe>
+<script>
+window.addEventListener('message', function (e) {
+  if (e.data && e.data.type === 'testiwall-height') {
+    document.getElementById('testiwall-widget').style.height = e.data.height + 'px';
+  }
+});
+</script>`;
 
   const colors = [
     { hex: "6366f1", label: "Indigo" },
@@ -139,6 +148,20 @@ export function EmbedInstructions({ embedUrl, slug }: { embedUrl: string; slug: 
                 className="w-4 h-4 rounded border-gray-300 text-accent focus:ring-accent"
               />
               <span className="text-sm text-gray-600">{hideBranding ? "Yes" : "No"}</span>
+            </label>
+          </div>
+
+          {/* Rating summary */}
+          <div>
+            <span className="block text-xs font-medium text-gray-500 mb-2">{t("embedInstructions.showSummary")}</span>
+            <label className="inline-flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showSummary}
+                onChange={(e) => setShowSummary(e.target.checked)}
+                className="w-4 h-4 rounded border-gray-300 text-accent focus:ring-accent"
+              />
+              <span className="text-sm text-gray-600">{showSummary ? "Yes" : "No"}</span>
             </label>
           </div>
         </div>

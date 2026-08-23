@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { Testimonial } from "@/lib/types";
 
@@ -7,6 +8,30 @@ function getPublicSupabase() {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const supabase = getPublicSupabase();
+  const { data: space } = await supabase
+    .from("spaces")
+    .select("name")
+    .eq("slug", slug)
+    .single();
+
+  if (!space) return {};
+  const title = `${space.name} — Wall of Love`;
+  const description = `Ce que les clients disent de ${space.name}. Témoignages vérifiés en temps réel.`;
+  return {
+    title,
+    description,
+    openGraph: { title, description, type: "website" },
+    twitter: { card: "summary_large_image", title, description },
+  };
 }
 
 export default async function WallOfLovePage({

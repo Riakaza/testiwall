@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CollectForm } from "@/components/CollectForm";
 
@@ -7,6 +8,30 @@ function getPublicSupabase() {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const supabase = getPublicSupabase();
+  const { data: space } = await supabase
+    .from("spaces")
+    .select("name, question")
+    .eq("slug", slug)
+    .single();
+
+  if (!space) return {};
+  const title = `${space.name} — Donne ton avis`;
+  const description = space.question || `Laisse un témoignage sur ${space.name}.`;
+  return {
+    title,
+    description,
+    robots: { index: false, follow: false },
+    openGraph: { title, description },
+  };
 }
 
 export default async function CollectPage({
