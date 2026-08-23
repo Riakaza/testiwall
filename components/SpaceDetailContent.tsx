@@ -74,6 +74,12 @@ export function SpaceDetailContent({
               <p className="text-sm font-semibold text-gray-900">{t("planLimit.title")}</p>
               <p className="text-sm text-gray-500 mt-0.5">{t("planLimit.desc")}</p>
             </div>
+            <Link
+              href="/pro"
+              className="flex-shrink-0 px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-dark transition-all shadow-md shadow-accent/20"
+            >
+              {t("planLimit.cta")}
+            </Link>
           </div>
         )}
 

@@ -52,6 +52,7 @@ export const translations = {
     planLimit: {
       title: "You're approaching the Free plan limit",
       desc: "Free allows up to 15 verified testimonials per space. Upgrade to Pro for unlimited testimonials and to remove TestiWall branding from your widgets.",
+      cta: "See Pro",
     },
     dashboard: {
       mySpaces: "My spaces",
@@ -317,6 +318,7 @@ export const translations = {
     planLimit: {
       title: "Tu approches de la limite du plan gratuit",
       desc: "Le plan gratuit permet jusqu'à 15 témoignages vérifiés par espace. Passe en Pro pour des témoignages illimités et masquer la marque TestiWall de tes widgets.",
+      cta: "Voir Pro",
     },
     dashboard: {
       mySpaces: "Mes espaces",
