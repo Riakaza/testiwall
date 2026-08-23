@@ -32,7 +32,14 @@ export default function SignupPage() {
     });
 
     if (error) {
-      setError(error.message);
+      if (
+        error.code === "over_email_send_rate_limit" ||
+        error.message.toLowerCase().includes("rate limit")
+      ) {
+        setError(t("signup.rateLimited"));
+      } else {
+        setError(error.message);
+      }
       setLoading(false);
     } else {
       setEmailSent(true);

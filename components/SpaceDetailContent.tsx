@@ -10,11 +10,18 @@ import { CollectButtonCode } from "@/components/CollectButtonCode";
 import { EmbedInstructions } from "@/components/EmbedInstructions";
 import { ImportCSV } from "@/components/ImportCSV";
 import { ExportCSV } from "@/components/ExportCSV";
+import { EditSpaceForm } from "@/components/EditSpaceForm";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import type { Testimonial } from "@/lib/types";
 
 interface SpaceDetailContentProps {
-  space: { id: string; name: string; slug: string };
+  space: {
+    id: string;
+    name: string;
+    slug: string;
+    question: string;
+    thank_you_msg: string;
+  };
   testimonials: Testimonial[];
   collectUrl: string;
   embedUrl: string;
@@ -138,6 +145,13 @@ export function SpaceDetailContent({
               </p>
             </div>
 
+            <EditSpaceForm
+              spaceId={space.id}
+              name={space.name}
+              question={space.question}
+              thankYouMsg={space.thank_you_msg}
+            />
+
             <TestimonialManager
               testimonials={testimonials}
               spaceId={space.id}
@@ -192,6 +206,13 @@ export function SpaceDetailContent({
                 <EmbedInstructions embedUrl={embedUrl} slug={space.slug} />
               </div>
             </div>
+
+            <EditSpaceForm
+              spaceId={space.id}
+              name={space.name}
+              question={space.question}
+              thankYouMsg={space.thank_you_msg}
+            />
 
             <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-8 shadow-sm">
               <h3 className="font-semibold text-gray-900 mb-1">{t("spaceDetail.importExport")}</h3>

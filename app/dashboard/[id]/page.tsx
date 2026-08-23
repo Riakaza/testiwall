@@ -41,7 +41,13 @@ export default async function SpaceDetailPage({
 
   return (
     <SpaceDetailContent
-      space={{ id: space.id, name: space.name, slug: space.slug }}
+      space={{
+        id: space.id,
+        name: space.name,
+        slug: space.slug,
+        question: space.question,
+        thank_you_msg: space.thank_you_msg,
+      }}
       testimonials={(testimonials as Testimonial[]) || []}
       collectUrl={collectUrl}
       embedUrl={embedUrl}

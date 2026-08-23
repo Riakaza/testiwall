@@ -13,6 +13,9 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [resending, setResending] = useState(false);
+  const [resent, setResent] = useState(false);
+  const [unconfirmedEmail, setUnconfirmedEmail] = useState("");
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -30,12 +33,40 @@ export default function LoginPage() {
     if (error) {
       if (error.message.toLowerCase().includes("email not confirmed")) {
         setError(t("login.emailNotVerified"));
+        setUnconfirmedEmail(email);
       } else {
         setError(error.message);
       }
       setLoading(false);
     } else {
       router.push("/dashboard");
+    }
+  }
+
+  async function handleResend() {
+    if (!unconfirmedEmail) return;
+    setResending(true);
+    setError("");
+    const supabase = createClient();
+    const { error } = await supabase.auth.resend({
+      type: "signup",
+      email: unconfirmedEmail,
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+    setResending(false);
+    if (error) {
+      if (
+        error.code === "over_email_send_rate_limit" ||
+        error.message.toLowerCase().includes("rate limit")
+      ) {
+        setError(t("login.resendRateLimited"));
+      } else {
+        setError(error.message);
+      }
+    } else {
+      setResent(true);
     }
   }
 
@@ -103,6 +134,22 @@ export default function LoginPage() {
             {error && (
               <div className="bg-red-50 border border-red-100 rounded-lg px-4 py-2.5">
                 <p className="text-red-600 text-sm">{error}</p>
+              </div>
+            )}
+
+            {unconfirmedEmail && !resent && (
+              <button
+                type="button"
+                onClick={handleResend}
+                disabled={resending}
+                className="w-full py-2.5 bg-white text-accent border border-accent/40 rounded-lg font-medium hover:bg-accent/5 disabled:opacity-50 transition-all"
+              >
+                {resending ? t("login.resending") : t("login.resendVerification")}
+              </button>
+            )}
+            {resent && (
+              <div className="bg-emerald-50 border border-emerald-100 rounded-lg px-4 py-2.5">
+                <p className="text-emerald-700 text-sm">{t("login.resendSent")}</p>
               </div>
             )}
 
