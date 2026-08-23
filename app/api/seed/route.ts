@@ -1,11 +1,17 @@
 import { createClient } from "@supabase/supabase-js";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 function getSupabase() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
+}
+
+function isAuthorized(request: NextRequest) {
+  const secret = process.env.SEED_SECRET;
+  if (!secret) return false;
+  return request.headers.get("x-seed-secret") === secret;
 }
 
 const DEMO_TESTIMONIALS = [
@@ -46,7 +52,11 @@ const DEMO_TESTIMONIALS = [
   },
 ];
 
-export async function POST() {
+export async function POST(request: NextRequest) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
   const supabase = getSupabase();
 
   // Find or create the testiwall space

@@ -37,6 +37,30 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Champs requis manquants." }, { status: 400 });
   }
 
+  if (
+    typeof author_email !== "string" ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(author_email.trim())
+  ) {
+    return NextResponse.json({ error: "Adresse email invalide." }, { status: 400 });
+  }
+
+  const limits: Array<[string, string, number]> = [
+    ["author_name", String(author_name ?? ""), 100],
+    ["author_title", author_title ? String(author_title) : "", 120],
+    ["content", String(content ?? ""), 2000],
+  ];
+  for (const [field, value, max] of limits) {
+    if (value.length > max) {
+      return NextResponse.json(
+        { error: `Le champ "${field}" dépasse ${max} caractères.` },
+        { status: 400 }
+      );
+    }
+  }
+
+  const safeRating =
+    Number.isInteger(rating) && rating >= 1 && rating <= 5 ? rating : 5;
+
   const supabase = getSupabase();
 
   // Extract IP from request headers (Vercel sets x-forwarded-for)
@@ -84,7 +108,7 @@ export async function POST(request: NextRequest) {
     author_email: author_email.trim().toLowerCase(),
     author_title: author_title ? stripHtml(author_title).trim() : null,
     content: stripHtml(content).trim(),
-    rating: rating || 5,
+    rating: safeRating,
     status: "unverified",
     email_verified: false,
     verification_token: token,
