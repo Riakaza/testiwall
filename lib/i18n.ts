@@ -262,6 +262,16 @@ export const translations = {
         status: "All systems operational",
       },
     },
+    pro: {
+      requestTitle: "Already paid?",
+      requestDesc: "Enter your TestiWall account email. Automatic activation within 15 minutes ⚡",
+      requestPlaceholder: "your@email.com",
+      requestSubmit: "Activate Pro",
+      requestSending: "Sending...",
+      requestError: "An error occurred. Please try again.",
+      requestSuccessTitle: "Request received!",
+      requestSuccessDesc: "Your account will be activated within 15 minutes.",
+    },
     lang: {
       en: "English",
       fr: "Français",
@@ -527,6 +537,16 @@ export const translations = {
         privacy: "Confidentialité",
         status: "Tous les systèmes opérationnels",
       },
+    },
+    pro: {
+      requestTitle: "Déjà payé ?",
+      requestDesc: "Entre l'email de ton compte TestiWall. Activation automatique en moins de 15 minutes ⚡",
+      requestPlaceholder: "ton@email.com",
+      requestSubmit: "Activer Pro",
+      requestSending: "Envoi...",
+      requestError: "Une erreur s'est produite. Réessaie.",
+      requestSuccessTitle: "Demande reçue !",
+      requestSuccessDesc: "Ton compte sera activé dans les 15 prochaines minutes.",
     },
     lang: {
       en: "English",
