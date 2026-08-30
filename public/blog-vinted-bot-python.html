@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comment automatiser ses achats Vinted avec Python — Guide 2026</title>
+<meta name="description" content="Créez un bot Vinted en Python pour automatiser vos achats et ventes. Niches rentables 2026, code exemple, solution clé-en-main 99€.">
+<meta name="keywords" content="bot vinted python, automatisation vinted, vinted script, revendeur vinted, bot achat vinted">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#111;line-height:1.7}
+.container{max-width:720px;margin:0 auto;padding:40px 20px}
+h1{font-size:2rem;font-weight:800;margin-bottom:12px;color:#111}
+.meta{color:#6b7280;font-size:.9rem;margin-bottom:32px}
+h2{font-size:1.3rem;font-weight:700;margin:32px 0 12px;color:#1a1a2e}
+p{margin-bottom:16px;color:#374151}
+ul,ol{padding-left:24px;margin-bottom:16px}
+li{margin-bottom:8px;color:#374151}
+code{background:#f4f4f9;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:.9rem}
+.cta-box{background:linear-gradient(135deg,#1a1a2e,#0f3460);color:#fff;border-radius:12px;padding:28px;text-align:center;margin:32px 0}
+.cta-box h3{font-size:1.3rem;margin-bottom:8px}
+.cta-box p{color:rgba(255,255,255,.8);margin-bottom:16px}
+.cta-btn{display:inline-block;background:#e94560;color:#fff;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:1rem}
+blockquote{border-left:4px solid #e94560;padding:12px 16px;background:#fff3f5;border-radius:0 8px 8px 0;margin:16px 0;font-style:italic}
+.warning{background:#fff3cd;border:1px solid #ffc107;padding:12px 16px;border-radius:8px;font-size:.85rem;color:#856404;margin:16px 0}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Comment automatiser ses achats Vinted avec Python — Guide 2026</h1>
+<div class="meta">Par Zakaria Zoubai · 30 août 2026 · 5 min de lecture</div>
+
+<p>Vous avez déjà vu une paire de Nike à 15€ se vendre en 3 secondes avant que vous puissiez cliquer ? C'est exactement pourquoi un bot Vinted change tout.</p>
+
+<h2>Le problème des bons plans Vinted</h2>
+
+<p>Sur Vinted, les articles au prix le plus attractif disparaissent en secondes. Des centaines de revendeurs surveillent les mêmes niches que vous, et la majorité utilise des scripts automatiques. Si vous êtes encore à rafraîchir manuellement, vous perdez.</p>
+
+<blockquote>En 2026, les revendeurs Vinted qui font 100-250€/mois de bénéfice en moyenne utilisent presque tous une forme d'automatisation.</blockquote>
+
+<h2>Ce que fait concrètement un bot Vinted</h2>
+
+<ul>
+  <li><strong>Surveillance continue</strong> — scan toutes les 15-60 secondes sur vos mots-clés</li>
+  <li><strong>Alerte instantanée</strong> — notification Discord ou Telegram dès qu'un article apparaît dans votre fourchette de prix</li>
+  <li><strong>Achat automatique</strong> — achète immédiatement si le prix est inférieur à votre seuil configuré</li>
+  <li><strong>Anti-détection</strong> — délais aléatoires, rotation d'user-agents pour rester sous le radar</li>
+  <li><strong>Analyse de marge</strong> — calcule automatiquement le bénéfice estimé à la revente</li>
+</ul>
+
+<h2>Les niches les plus rentables en 2026</h2>
+
+<p>Pas toutes les catégories sont égales. Voici les meilleures niches testées en production :</p>
+
+<ol>
+  <li><strong>Pull-Sweat femme</strong> — buy &lt; 8€ / sell &gt; 30€ (<strong>275% de marge</strong>)</li>
+  <li><strong>Jeans femme</strong> — buy &lt; 20€ / sell &gt; 70€ (250% de marge)</li>
+  <li><strong>Sacs Vanessa Bruno</strong> — buy &lt; 35€ / sell &gt; 70€ (100% de marge, volume élevé)</li>
+  <li><strong>Ralph Lauren (polos, sweats)</strong> — buy &lt; 15€ / sell &gt; 45€ (200% de marge)</li>
+  <li><strong>Imperméables femme</strong> — buy &lt; 15€ / sell &gt; 45€ (200% de marge)</li>
+</ol>
+
+<p>Le secret : ces articles sont généralement sous-côtés par des vendeurs qui ne connaissent pas leur valeur réelle.</p>
+
+<h2>Comment construire le bot avec Python</h2>
+
+<p>Un bot Vinted minimal utilise <code>httpx</code> pour les requêtes, <code>BeautifulSoup</code> pour le parsing HTML, et <code>discord.py</code> pour les alertes. La partie difficile, c'est le bypass de la protection anti-bot (Vinted utilise des tokens CSRF et rate-limiting).</p>
+
+<p>Les bibliothèques essentielles :</p>
+
+<ul>
+  <li><code>playwright</code> — navigation navigateur pour éviter la détection</li>
+  <li><code>httpx</code> — requêtes HTTP avec gestion des cookies</li>
+  <li><code>sqlite3</code> — base de données locale pour éviter les doublons</li>
+  <li><code>discord-webhook</code> — alertes instantanées</li>
+</ul>
+
+<p>Le cycle principal :</p>
+<ol>
+  <li>Authentification avec session valide</li>
+  <li>Requête API Vinted <code>/api/v2/catalog/items</code> avec filtres prix/catégorie</li>
+  <li>Déduplication via la base de données locale</li>
+  <li>Calcul de marge estimée</li>
+  <li>Notification Discord si marge &gt; seuil</li>
+  <li>Achat automatique si prix &lt; seuil d'achat immédiat</li>
+</ol>
+
+<div class="warning">⚠️ Les bots Vinted sont contraires aux CGU de la plateforme. Utilisation à titre personnel uniquement.</div>
+
+<h2>Combien peut-on gagner ?</h2>
+
+<p>Avec 70-85 articles actifs et une rotation régulière :</p>
+<ul>
+  <li>Bénéfice moyen : <strong>100-250€/mois</strong></li>
+  <li>Temps de gestion : 30 min/jour (emballage + dépôt en boîte aux lettres)</li>
+  <li>Investissement initial : 200-400€ (stock de démarrage)</li>
+</ul>
+
+<div class="cta-box">
+  <h3>Solution clé-en-main disponible</h3>
+  <p>366 niches pré-configurées, code source complet, support 7 jours. Livraison en 24h après paiement.</p>
+  <a href="/vinted-bot.html" class="cta-btn">Voir la solution — 99€</a>
+</div>
+
+<p style="color:#9ca3af;font-size:.85rem">Contact : <a href="mailto:testiwall.app@gmail.com" style="color:#6366f1">testiwall.app@gmail.com</a> · Développeur Python/IA · Zakaria Zoubai</p>
+
+</div>
+</body>
+</html>
