@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Démo live SMS Castings — PODIUM</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8fafc;color:#111;line-height:1.6}
+.container{max-width:680px;margin:40px auto;padding:20px}
+h1{font-size:1.7rem;color:#6366f1;margin-bottom:8px}
+.subtitle{color:#6b7280;font-size:1rem;margin-bottom:28px}
+.card{background:#fff;border-radius:12px;padding:28px;box-shadow:0 2px 12px rgba(99,102,241,.08);margin-bottom:20px}
+label{display:block;font-weight:600;font-size:.9rem;color:#374151;margin-bottom:6px;margin-top:16px}
+label:first-child{margin-top:0}
+input,textarea{width:100%;padding:10px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:.95rem;font-family:inherit;transition:border-color .2s}
+input:focus,textarea:focus{outline:none;border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.1)}
+textarea{resize:vertical;min-height:100px}
+.btn{display:inline-block;padding:12px 24px;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;border:none;transition:opacity .2s}
+.btn:hover{opacity:.9}
+.btn-primary{background:#6366f1;color:#fff;width:100%;margin-top:20px;font-size:1.05rem}
+.btn-paypal{background:#10b981;color:#fff;padding:14px 28px;font-size:1.05rem;text-decoration:none;display:block;text-align:center;border-radius:8px;margin-top:16px;font-weight:700}
+#results{display:none}
+.sms-item{background:#f0f4ff;border-left:4px solid #6366f1;border-radius:4px;padding:12px 16px;margin-bottom:10px;font-size:.9rem}
+.sms-label{font-weight:700;color:#3730a3;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.stats{background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:.9rem;color:#166534}
+.price-box{text-align:center;padding:20px;background:#f9fafb;border-radius:8px;border:1px solid #e5e7eb}
+.price-box h3{font-size:1.3rem;color:#111;margin-bottom:8px}
+.price-box p{color:#6b7280;font-size:.9rem;margin-bottom:4px}
+.note{font-size:.8rem;color:#9ca3af;text-align:center;margin-top:8px}
+footer{text-align:center;color:#9ca3af;font-size:.85rem;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Démo live — Votre système SMS PODIUM</h1>
+  <p class="subtitle">Testez avec vos propres données. Entrez une liste de participants et voyez les SMS générés instantanément.</p>
+
+  <div class="card">
+    <label for="nom">Nom du casting</label>
+    <input type="text" id="nom" value="Casting PODIUM Paris" placeholder="Casting PODIUM Paris">
+
+    <label for="lieu">Adresse</label>
+    <input type="text" id="lieu" value="12 rue de Rivoli, 75001 Paris" placeholder="12 rue de Rivoli, 75001 Paris">
+
+    <label for="date">Date et heure</label>
+    <input type="text" id="date" value="15 sept à 14h" placeholder="15 sept à 14h">
+
+    <label for="participants">Participants (un prénom par ligne)</label>
+    <textarea id="participants" placeholder="Sarah&#10;Marie&#10;Lucas&#10;Emma&#10;Thomas">Sarah
+Marie
+Lucas
+Emma
+Thomas</textarea>
+
+    <button class="btn btn-primary" onclick="genererSMS()">▶ Générer les SMS</button>
+  </div>
+
+  <div id="results">
+    <div class="card">
+      <div id="stats-box" class="stats"></div>
+
+      <h2 style="font-size:1rem;color:#374151;margin-bottom:12px;">SMS de convocation (envoi immédiat)</h2>
+      <div id="sms-list"></div>
+
+      <h2 style="font-size:1rem;color:#374151;margin:20px 0 12px;">SMS de rappel (J-1, automatique)</h2>
+      <div id="rappel-box"></div>
+    </div>
+
+    <div class="card">
+      <div class="price-box">
+        <h3>Ce système, installé pour PODIUM : <span style="color:#10b981">280€</span> forfait unique</h3>
+        <p>Installation + configuration + formation de votre équipe incluses</p>
+        <p>Coûts SMS : ~10–15€/mois (Twilio ou Brevo, vous payez directement)</p>
+        <a href="https://paypal.com/paypalme/zakariazoubai/280" target="_blank" class="btn-paypal">
+          ✅ Payer 280€ maintenant (PayPal)
+        </a>
+        <p class="note">Ou répondez à l'email : testiwall.app@gmail.com</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>Zakaria Zoubai — Développeur Python/IA — Disponible cette semaine</footer>
+</div>
+
+<script>
+function genererSMS() {
+  var nom = document.getElementById('nom').value.trim() || 'Casting PODIUM';
+  var lieu = document.getElementById('lieu').value.trim() || 'adresse à confirmer';
+  var date = document.getElementById('date').value.trim() || 'date à confirmer';
+  var raw = document.getElementById('participants').value.trim();
+  var prenoms = raw.split('\n').map(function(p){ return p.trim(); }).filter(function(p){ return p.length > 0; });
+
+  if (prenoms.length === 0) {
+    alert('Entrez au moins un prénom.');
+    return;
+  }
+
+  var list = document.getElementById('sms-list');
+  list.innerHTML = '';
+  prenoms.forEach(function(prenom) {
+    var div = document.createElement('div');
+    div.className = 'sms-item';
+    div.innerHTML = '<div class="sms-label">SMS pour ' + prenom + '</div>' +
+      'Bonjour ' + prenom + ' ! Vous êtes convoqué(e) pour <strong>' + nom + '</strong> le ' + date + '.' +
+      ' Adresse : ' + lieu + '. Répondez <strong>OUI</strong> ou <strong>NON</strong>.';
+    list.appendChild(div);
+  });
+
+  var rappel = document.getElementById('rappel-box');
+  rappel.innerHTML = '<div class="sms-item"><div class="sms-label">Envoyé automatiquement J-1 à tous</div>' +
+    'Rappel : ' + nom + ' demain ' + date.split(' à ')[1] + ' ! À bientôt, l\'équipe PODIUM</div>';
+
+  var cout = (prenoms.length * 0.07).toFixed(2);
+  document.getElementById('stats-box').innerHTML =
+    '✅ ' + prenoms.length + ' SMS générés · Coût estimé : ' + prenoms.length + ' × 0,07€ = <strong>' + cout + '€</strong>';
+
+  var results = document.getElementById('results');
+  results.style.display = 'block';
+  results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+</body>
+</html>
