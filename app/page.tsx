@@ -74,6 +74,14 @@ export default function Home() {
               {t("landing.hero.cta")}
             </Link>
             <span className="text-sm text-gray-400">{t("landing.hero.noCreditCard")}</span>
+            <a href="https://www.producthunt.com/posts/testiwall-2" target="_blank" rel="noopener noreferrer" className="mt-2">
+              <img
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=testiwall-2&theme=neutral"
+                alt="TestiWall - Verified testimonials widget | Product Hunt"
+                width="200"
+                height="44"
+              />
+            </a>
           </div>
         </div>
 
