@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bot Vinted — Automatisez vos achats et ventes | 99€</title>
+<meta name="description" content="Script Python automatisant vos achats Vinted : alertes instantanées, achat automatique au meilleur prix, gestion des ventes. 99€ une seule fois.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8fafc;color:#111;line-height:1.6}
+.hero{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);color:#fff;padding:60px 20px;text-align:center}
+.hero h1{font-size:2.2rem;font-weight:800;margin-bottom:12px}
+.hero h1 span{color:#e94560}
+.hero p{font-size:1.1rem;opacity:.85;max-width:600px;margin:0 auto 28px}
+.badge{display:inline-block;background:#e94560;color:#fff;padding:4px 12px;border-radius:20px;font-size:.8rem;font-weight:700;margin-bottom:16px}
+.container{max-width:720px;margin:0 auto;padding:20px}
+.card{background:#fff;border-radius:12px;padding:28px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:20px}
+h2{font-size:1.4rem;color:#111;margin-bottom:16px}
+.features{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.feature{background:#f0f4ff;border-radius:8px;padding:14px}
+.feature .icon{font-size:1.5rem;margin-bottom:6px}
+.feature h3{font-size:.9rem;font-weight:700;color:#3730a3}
+.feature p{font-size:.82rem;color:#4b5563}
+.pricing{text-align:center;padding:28px}
+.price-main{font-size:3rem;font-weight:900;color:#1a1a2e}
+.price-sub{font-size:1rem;color:#6b7280;margin-bottom:20px}
+.btn-buy{display:block;background:#e94560;color:#fff;padding:16px 32px;border-radius:10px;text-decoration:none;font-weight:800;font-size:1.1rem;margin:0 auto 12px;max-width:300px;text-align:center}
+.btn-question{display:block;color:#6b7280;font-size:.9rem;text-align:center;margin-top:8px}
+.stats{display:flex;gap:20px;justify-content:center;margin:20px 0;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-size:1.8rem;font-weight:800;color:#e94560}
+.stat-label{font-size:.8rem;color:#6b7280}
+.warning{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:12px 16px;font-size:.85rem;color:#856404;margin-top:16px}
+footer{text-align:center;color:#9ca3af;font-size:.85rem;padding:20px}
+@media(max-width:500px){.features{grid-template-columns:1fr}.hero h1{font-size:1.6rem}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">⚡ Livraison en 24h</div>
+  <h1>Bot Vinted — <span>Automatisez</span> vos achats et ventes</h1>
+  <p>Script Python qui surveille Vinted 24h/24, alerte instantanément et achète automatiquement les bonnes affaires avant les autres.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">100-250€</div><div class="stat-label">bénéfice/mois moyen</div></div>
+    <div class="stat"><div class="stat-num">70-85</div><div class="stat-label">articles actifs possibles</div></div>
+    <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">surveillance automatique</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <h2>🤖 Ce que le bot fait pour vous</h2>
+    <div class="features">
+      <div class="feature">
+        <div class="icon">🔍</div>
+        <h3>Surveillance continue</h3>
+        <p>Scan Vinted toutes les 30 secondes sur vos mots-clés et niches configurées</p>
+      </div>
+      <div class="feature">
+        <div class="icon">⚡</div>
+        <h3>Alertes instantanées</h3>
+        <p>Notification Discord/Telegram dès qu'une bonne affaire apparaît (avant les autres)</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🛒</div>
+        <h3>Achat automatique</h3>
+        <p>Achète automatiquement si le prix est dans votre fourchette, sans intervention</p>
+      </div>
+      <div class="feature">
+        <div class="icon">📊</div>
+        <h3>Analyse de marges</h3>
+        <p>Calcule automatiquement la marge de revente estimée pour chaque article trouvé</p>
+      </div>
+      <div class="feature">
+        <div class="icon">📦</div>
+        <h3>Gestion des ventes</h3>
+        <p>Suit l'état de vos articles en vente, alerte quand un acheteur contacte</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🔒</div>
+        <h3>Anti-détection</h3>
+        <p>Bypass des protections Vinted, rotation de délais, comportement humain simulé</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📈 Niches pré-configurées incluses</h2>
+    <p style="color:#4b5563;margin-bottom:12px">Le bot vient avec 366 niches testées et validées :</p>
+    <ul style="padding-left:20px;color:#4b5563;font-size:.9rem;line-height:2">
+      <li>Sacs Vanessa Bruno → buy &lt;35€ / sell &gt;70€ (100% marge)</li>
+      <li>Pull-Sweat femme → buy &lt;8€ / sell &gt;30€ (275% marge)</li>
+      <li>Jeans femme → buy &lt;20€ / sell &gt;70€ (250% marge)</li>
+      <li>Ralph Lauren → buy &lt;15€ / sell &gt;45€ (200% marge)</li>
+      <li>+ 362 autres niches validées en production</li>
+    </ul>
+    <div class="warning">
+      ⚠️ Les bots Vinted sont contraires aux CGU. Utilisation à vos risques. Le script est livré à titre éducatif/personnel.
+    </div>
+  </div>
+
+  <div class="card pricing">
+    <h2>💰 Tarif</h2>
+    <div class="price-main">99€</div>
+    <div class="price-sub">Paiement unique · Code source Python complet · Support 7 jours</div>
+    <a href="https://paypal.com/paypalme/zakariazoubai/99" target="_blank" class="btn-buy">
+      Acheter le bot — 99€ PayPal
+    </a>
+    <p style="font-size:.8rem;color:#9ca3af;margin-top:8px">Livraison du code par email dans les 24h après paiement</p>
+    <a href="mailto:testiwall.app@gmail.com?subject=Question bot Vinted" class="btn-question">
+      💬 Poser une question avant d'acheter
+    </a>
+  </div>
+
+  <div class="card">
+    <h2>✅ Ce qui est inclus</h2>
+    <ul style="padding-left:20px;color:#4b5563;font-size:.9rem;line-height:2">
+      <li>Code source Python complet + documentation</li>
+      <li>366 niches pré-configurées avec marges estimées</li>
+      <li>Guide d'installation Windows/Mac/Linux</li>
+      <li>Connexion Discord/Telegram pour les alertes</li>
+      <li>7 jours de support par email</li>
+      <li>Mises à jour gratuites 30 jours si Vinted change son API</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  Zakaria Zoubai — Développeur Python · testiwall.app@gmail.com
+</footer>
+
+</body>
+</html>
