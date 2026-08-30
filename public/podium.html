@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Système SMS – Convocations Casting PODIUM</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: #fff;
+      color: #111;
+      line-height: 1.6;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    header { text-align: center; margin-bottom: 30px; }
+    header h1 { font-size: 1.8rem; color: #6366f1; }
+    header p { font-size: 1rem; color: #555; margin-top: 8px; }
+    section { margin-bottom: 40px; }
+    h2 {
+      font-size: 1.4rem;
+      border-bottom: 2px solid #6366f1;
+      display: inline-block;
+      padding-bottom: 6px;
+      margin-bottom: 20px;
+    }
+    .steps { display: flex; flex-direction: column; gap: 20px; }
+    .step { display: flex; align-items: flex-start; gap: 12px; }
+    .step-number { font-size: 1.5rem; font-weight: bold; color: #6366f1; min-width: 32px; }
+    .sms-examples { display: flex; flex-direction: column; gap: 15px; }
+    .sms-box {
+      background-color: #f4f4f9;
+      border-left: 4px solid #6366f1;
+      padding: 12px 16px;
+      border-radius: 4px;
+      font-size: 0.95rem;
+    }
+    .comparison-table { width: 100%; border-collapse: collapse; }
+    .comparison-table th, .comparison-table td {
+      border: 1px solid #ccc; padding: 12px; text-align: left; font-size: 0.95rem;
+    }
+    .comparison-table th { background-color: #eee; }
+    .price-section {
+      text-align: center; background-color: #f9f9f9;
+      padding: 20px; border-radius: 8px;
+    }
+    .price-section h3 { font-size: 1.2rem; margin-bottom: 10px; }
+    .price-section p { margin: 8px 0; font-size: 0.95rem; }
+    .cta-button {
+      display: inline-block; margin-top: 15px;
+      background-color: #10b981; color: white;
+      text-decoration: none; padding: 12px 24px;
+      border-radius: 6px; font-weight: bold; font-size: 1rem;
+    }
+    footer { text-align: center; font-size: 0.9rem; color: #777; margin-top: 30px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Votre système SMS de convocations — Zakaria Zoubai</h1>
+    <p>Spécialement conçu pour PODIUM selon votre annonce Codeur</p>
+  </header>
+
+  <section>
+    <h2>🔧 Comment ça marche</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1️⃣</div>
+        <div class="step-text">Vous exportez votre liste d'inscrits (Excel/Google Sheets)</div>
+      </div>
+      <div class="step">
+        <div class="step-number">2️⃣</div>
+        <div class="step-text">Le système envoie automatiquement les SMS personnalisés à vos 100 participants</div>
+      </div>
+      <div class="step">
+        <div class="step-number">3️⃣</div>
+        <div class="step-text">Les confirmations (OUI/NON) sont centralisées automatiquement — vous voyez qui vient</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>💬 Exemples de SMS envoyés</h2>
+    <div class="sms-examples">
+      <div class="sms-box">
+        Bonjour Sarah ! Vous êtes convoquée pour le casting PODIUM à Paris le 15 sept à 14h.
+        Adresse : 12 rue de Rivoli, 75001 Paris. Confirmez votre présence par OUI ou NON.
+      </div>
+      <div class="sms-box">
+        Rappel casting PODIUM demain à 14h ! À bientôt, l'équipe PODIUM
+      </div>
+      <div class="sms-box">
+        [Confirmations reçues] Marie ✓, Lucas ✓, Emma ✓ — Thomas a décliné. 3 places libérées automatiquement.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>📊 Avant / Après</h2>
+    <table class="comparison-table">
+      <thead>
+        <tr><th>Avant</th><th>Après</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Envoi manuel un par un<br/>2h de travail<br/>Oublis possibles<br/>Gestion des réponses manuelle</td>
+          <td>1 clic suffit<br/>100 SMS en 30 secondes<br/>Rappels automatiques J-1<br/>Tableau des confirmations en temps réel</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>💰 Tarification</h2>
+    <div class="price-section">
+      <h3>280 € forfait unique</h3>
+      <p>Installation + configuration + formation de votre équipe incluses</p>
+      <p><strong>Coûts SMS :</strong> ~10–15 €/mois (via Twilio ou Brevo — vous payez directement)</p>
+      <a href="mailto:testiwall.app@gmail.com?subject=Je%20veux%20le%20système%20SMS%20PODIUM%20—%20280€" class="cta-button">
+        Je veux ce système → répondre à cet email
+      </a>
+      <p style="margin-top:10px; font-size:0.9rem;">
+        Contact direct : <a href="mailto:testiwall.app@gmail.com">testiwall.app@gmail.com</a>
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    Zakaria Zoubai — Développeur Python/IA — Disponible cette semaine
+  </footer>
+
+</body>
+</html>
