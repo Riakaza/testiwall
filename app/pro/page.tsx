@@ -153,8 +153,8 @@ export default function ProPage() {
         <section className="text-center mb-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Déjà payé ? Active ton compte</h2>
           <p className="text-gray-500 text-sm mb-8">
-            Entre l&apos;email de ton compte TestiWall. Activation automatique en moins de <strong>15 minutes</strong> après
-            réception du paiement. ⚡
+            Entre l&apos;email de ton compte TestiWall. Activation sous <strong>24h</strong> après vérification du paiement.
+            Tu recevras une confirmation par email.
           </p>
           <ProRequestForm />
         </section>
