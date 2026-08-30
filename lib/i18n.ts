@@ -264,7 +264,7 @@ export const translations = {
     },
     pro: {
       requestTitle: "Already paid?",
-      requestDesc: "Enter your TestiWall account email. Automatic activation within 15 minutes ⚡",
+      requestDesc: "Enter your TestiWall account email. Activation within 24h after payment verification.",
       requestPlaceholder: "your@email.com",
       requestSubmit: "Activate Pro",
       requestSending: "Sending...",
@@ -540,7 +540,7 @@ export const translations = {
     },
     pro: {
       requestTitle: "Déjà payé ?",
-      requestDesc: "Entre l'email de ton compte TestiWall. Activation automatique en moins de 15 minutes ⚡",
+      requestDesc: "Entre l'email de ton compte TestiWall. Activation sous 24h après vérification du paiement.",
       requestPlaceholder: "ton@email.com",
       requestSubmit: "Activer Pro",
       requestSending: "Envoi...",
